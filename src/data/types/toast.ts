@@ -1,4 +1,4 @@
-import { EToast } from "@/data/enum/e_toast"
+import { EToast } from "@/data/enum/toast.enum"
 
 export type ToastType = {
     id?: number

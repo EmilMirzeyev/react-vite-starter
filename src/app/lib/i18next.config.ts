@@ -1,4 +1,4 @@
-import { az, en, ru } from "@/data/mocks/translates";
+import { az, en, ru } from "@/data/translates";
 import { getCookie } from "@/app/helpers/cookies";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL } from "@/data/mocks/environments";
+import { BASE_URL } from "@/data/utils/environments";
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,

@@ -1,7 +1,7 @@
-import { PostDSO } from '@/data/dso/post.dso';
-import post_repository from "@/app/repositories/concrency/post_repository";
-import { ERevalidateTags } from "@/data/enum/e_revalidate_tags";
-import i18n from '@/app/lib/i18next';
+import { type PostDSO } from '@/data/dso/post.dso';
+import post_repository from "@/app/repositories/implementation/post_repository";
+import { ERevalidateTags } from "@/data/enum/revalidate_tags.enum";
+import i18n from '@/app/lib/i18next.config';
 import { useAppDispatch } from '@/app/hooks/useRedux';
 import { successToast } from '@/app/store/root/toastSlice';
 import { resetPostForm } from '@/app/store/postSlice';

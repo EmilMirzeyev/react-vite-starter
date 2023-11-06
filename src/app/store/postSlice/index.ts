@@ -1,16 +1,18 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { PostDSO } from "@/data/dso/post.dso";
-import { deepClone } from "../helpers/deepClone";
-import { PostModel } from "@/data/model/post.model";
+import { type PostDSO } from "@/data/dso/post.dso";
+import { deepClone } from "@/app/helpers/deepClone";
+import { type PostModel } from "@/data/model/post.model";
+import { type PostSliceType } from "./postSlice";
 
 const initPostForm: PostDSO = {
   title: "",
   description: "",
 }
 
-const initialState: { posts: PostModel[], post_form: PostDSO } = {
+const initialState: PostSliceType = {
   posts: [],
   post_form: deepClone(initPostForm),
+  is_edit: false
 };
 
 export const postSlice = createSlice({
@@ -26,12 +28,19 @@ export const postSlice = createSlice({
     deletePost: (state, action: PayloadAction<number>) => {
       state.posts = state.posts.filter((post) => post.id !== action.payload)
     },
+    setPostForm: (state, action: PayloadAction<PostModel>) => {
+      let key: keyof PostDSO
+      for (key in state.post_form) {
+        (state.post_form[key] as PostDSO[keyof PostDSO]) = action.payload[key]
+      }
+      state.post_form.id = action.payload.id
+    },
     setAllPostFormInputs: (
       state,
-      action: PayloadAction<{ key: keyof PostDSO; value: string }>
+      action: PayloadAction<{ key: keyof PostDSO, value: PostDSO[keyof PostDSO] }>
     ) => {
       const { key, value } = action.payload;
-      state.post_form[key] = value
+      (state.post_form[key] as PostDSO[keyof PostDSO]) = value
     },
     resetPostForm: (state) => {
       state.post_form = initPostForm
@@ -39,5 +48,5 @@ export const postSlice = createSlice({
   },
 });
 
-export const { setPosts, addPost, deletePost, setAllPostFormInputs, resetPostForm } = postSlice.actions;
+export const { setPosts, addPost, deletePost, setPostForm, setAllPostFormInputs, resetPostForm } = postSlice.actions;
 export default postSlice.reducer;

@@ -1,8 +1,8 @@
+import { EButtonVariants } from "@/data/enum/button.enum";
 import { ButtonHTMLAttributes } from "react";
-import { EButtonVariants } from "@/data/enum/e_button";
 
 export type ButtonType = ButtonHTMLAttributes<HTMLButtonElement> & {
-    variant: EButtonVariants;
+    variant?: EButtonVariants;
     disabled?: boolean;
     isLoading?: boolean;
 }

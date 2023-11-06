@@ -1,5 +1,5 @@
-import { PostDTO } from "../dto/post.dto"
-import { PostModel } from "../model/post.model"
+import { type PostDTO } from "@/data/dto/post.dto"
+import { type PostModel } from "@/data/model/post.model"
 
 export const postMigration = (dto: PostDTO): PostModel => {
     return {

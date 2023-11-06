@@ -1,7 +1,7 @@
 import { Listbox, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 import UpChevronSVG from "@svg/up_chevron.svg?react"
-import { SelectType } from './select';
+import { type SelectType } from './select';
 
 const Select = <T,>({ data, option, value, onChange, invalid }: SelectType<T>) => {
 

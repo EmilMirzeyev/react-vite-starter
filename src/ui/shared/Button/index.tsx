@@ -1,6 +1,6 @@
-import { FC, useCallback } from "react";
-import { EButtonVariants } from "@/data/enum/e_button";
-import { ButtonType } from "./button";
+import { useCallback } from "react";
+import { EButtonVariants } from "@/data/enum/button.enum";
+import { type ButtonType } from "./button";
 
 const Button = ({
     variant = EButtonVariants.FILLED,

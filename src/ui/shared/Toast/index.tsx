@@ -1,5 +1,5 @@
 import { useAppSelector } from "@/app/hooks/useRedux";
-import { EToast } from "@/data/enum/e_toast";
+import { EToast } from "@/data/enum/toast.enum";
 
 const Toast = () => {
   const toastList = useAppSelector((state) => state.toast.toastList);

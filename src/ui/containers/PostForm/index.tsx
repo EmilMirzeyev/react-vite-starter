@@ -1,7 +1,7 @@
 import { SyntheticEvent, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/app/hooks/useRedux";
 import { setAllPostFormInputs } from "@/app/store/postSlice";
-import { EButtonVariants } from "@/data/enum/e_button";
+import { EButtonVariants } from "@/data/enum/button.enum";
 import { Controller, useForm } from "react-hook-form";
 import { BaseSelect } from "@/data/types/base_select";
 import { useAddPost } from "@/app/api/postApi";
@@ -59,7 +59,7 @@ const PostForm = () => {
           }}
           onChange={(value) =>
             dispatch(
-              setAllPostFormInputs({ key: "title", value })
+              setAllPostFormInputs({ key: "title", value})
             )
           }
         />

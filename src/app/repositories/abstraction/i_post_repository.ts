@@ -1,5 +1,5 @@
-import { PostDSO } from "@/data/dso/post.dso";
-import { PostModel } from "@/data/model/post.model";
+import { type PostDSO } from "@/data/dso/post.dso";
+import { type PostModel } from "@/data/model/post.model";
 
 export interface IPostRepository {
   getPosts(query: string): Promise<PostModel[]>;

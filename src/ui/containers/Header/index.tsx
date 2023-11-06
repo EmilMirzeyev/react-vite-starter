@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { setCookie } from "@/app/helpers/cookies";
-import { languageResources } from "@/app/lib/i18next";
+import { languageResources } from "@/app/lib/i18next.config";
 
 const Header = () => {
   const { i18n } = useTranslation();

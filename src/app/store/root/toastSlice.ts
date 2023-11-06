@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { AppDispatch } from '..'
-import { EToast } from '@/data/enum/e_toast'
+import { EToast } from '@/data/enum/toast.enum'
 import { ToastType } from '@/data/types/toast'
 
 const initialState: { toastList: ToastType[] } = {

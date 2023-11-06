@@ -1,3 +1,6 @@
+import { BaseSelect } from "@/data/types/base_select";
+import { PropsWithChildren, ReactNode } from "react";
+
 export type SelectType<T> = {
     data: T[];
     option: (opt: T) => ReactNode
