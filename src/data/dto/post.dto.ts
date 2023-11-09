@@ -1,6 +1,4 @@
-export type PostDTO = {
-    id: number
-    userId: number
-    body: string
-    title: string
-}
+import { z } from "zod";
+import { postSchema } from "../schemas/postSchema";
+
+export type PostDTO = z.infer<typeof postSchema>;
