@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { type PostDSO } from "@/data/dso/post.dso";
-import { deepClone } from "@/app/helpers/deepClone";
+import { deepClone } from "@/app/utils/deepClone";
 import { type PostModel } from "@/data/model/post.model";
 import { type PostSliceType } from "./postSlice";
 

@@ -3,7 +3,7 @@ import post_repository from "@/app/repositories/implementation/post_repository";
 import { ERevalidateTags } from "@/data/enum/revalidate_tags.enum";
 import i18n from '@/app/lib/i18next.config';
 import { useAppDispatch } from '@/app/hooks/useRedux';
-import { successToast } from '@/app/store/root/toastSlice';
+import { errorToast, successToast } from '@/app/store/root/toastSlice';
 import { resetPostForm } from '@/app/store/postSlice';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -32,10 +32,21 @@ export const useAddPost = () => {
     mutationFn: (post: PostDSO) => {
       return post_repository.addPost(post);
     },
+    onMutate: async (post: PostDSO) => {
+      await queryClient.cancelQueries({ queryKey: [ERevalidateTags.POSTS] })
+      const previousPosts = queryClient.getQueryData([ERevalidateTags.POSTS])
+      queryClient.setQueryData([ERevalidateTags.POSTS], (old: any) => [{id: 123, ...post, isRead: false}, ...old])
+      return { previousPosts }
+    },
+    onError: (_error, _variables, context) => {
+      dispatch(errorToast(i18n.t("post_error")))
+      queryClient.setQueryData(['todos'], context?.previousPosts)
+    },
     onSuccess: (_data, _variables) => {
-      // dispatch(addPost({ id: data.id, isRead: false, ...variables }))
       dispatch(successToast(i18n.t("post_success")))
       dispatch(resetPostForm())
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({queryKey: [ERevalidateTags.POSTS]});
     },
   });

@@ -9,10 +9,10 @@ import {
 } from "@/app/services/posts.service";
 
 class PostRepository implements IPostRepository {
-  deletePost(id: number): Promise<any> {
+  deletePost(id: number): Promise<unknown> {
    return deletePostService(id)
   }
-  addPost(post: PostDSO): Promise<any> {
+  addPost(post: PostDSO): Promise<unknown> {
     return addPostService(post);
   }
   getPosts(query: string): Promise<PostModel[]> {

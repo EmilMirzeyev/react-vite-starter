@@ -1,9 +1,11 @@
 import { useCallback } from "react";
 import { EButtonVariants } from "@/data/enum/button.enum";
 import { type ButtonType } from "./button";
+import { twMerge } from "tailwind-merge";
 
 const Button = ({
     variant = EButtonVariants.FILLED,
+    className,
     isLoading,
     disabled,
     children,
@@ -44,10 +46,10 @@ const Button = ({
             {...props}
             disabled={isLoading || disabled}
             onMouseDown={rippleEffect}
-            className={[
+            className={twMerge(
                 "relative flex items-center justify-center h-10.5 z-10 rounded px-6 overflow-hidden [&>span]:absolute [&>span]:z-50 [&>span]:animate-ripple [&>span]:inline-block [&>span]:bg-white/50 [&>span]:-translate-y-1/2 [&>span]:-translate-x-1/2 [&>span]:pointer-events-none [&>span]:rounded-full [&>span]:scale-0 hover:brightness-125",
-                variants[variant]()
-            ].join(" ")}
+                variants[variant](),
+                className)}
         >
             {isLoading ? (
                 <div className="relative">
