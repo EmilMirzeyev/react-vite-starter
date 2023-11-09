@@ -14,14 +14,13 @@ const PostCard = ({ id, title, description, updateHandler, deleteHandler }: Post
           <EditSVG
             className="text-blue cursor-pointer"
             data-tooltip-id="my-tooltip"
-            data-tooltip-content="Hello world!"
+            data-tooltip-content="Edit"
             data-tooltip-place="top"
             onClick={updateHandler} />
           <Link to={id.toString()} aria-label={title} className="w-min"><UpChevronSVG className="w-6 h-6 text-red rotate-90" /></Link>
         </div>
         <XSVG className="absolute top-0 right-0 bg-red text-white cursor-pointer hover:brightness-125" onClick={deleteHandler} />
       </div>
-
     </>
   );
 };

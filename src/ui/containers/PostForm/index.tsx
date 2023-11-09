@@ -39,6 +39,8 @@ const PostForm = () => {
     output && addPost.mutate(postForm);
   };
 
+  console.log("postform render");
+
   return (
     <div className="flex flex-col gap-y-4">
       <h2>{t("add_post")}</h2>

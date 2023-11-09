@@ -9,7 +9,7 @@ import { useAppDispatch } from '@/app/hooks/useRedux';
 import Modal from '@/ui/shared/Modal';
 import Button from '@/ui/shared/Button';
 import { useUpdateEffect } from '@/app/hooks/useUpdateEffect';
-// import { useUpdateEffect } from '@/app/hooks/useUpdateEffect';
+import PostCardSkeleton from '@/ui/components/PostCard/PostCardSkeleton';
 
 const PostList = () => {
     const { data, isFetching } = usePosts("?_limit=20");
@@ -18,16 +18,16 @@ const PostList = () => {
     const deletePost = useDeletePost();
     const [modalVisible, setModalVisible] = useState(false)
     const [activeID, setActiveID] = useState<number>()
-
+    
     useUpdateEffect(() => {
         //   dispatch(setPosts(data as PostModel[]))
         setModalVisible(false)
     }, [deletePost.isSuccess])
-
+    
     const deleteHandler = (id: number) => {
         deletePost.mutate(id);
     }
-
+    
     const updateHandler = (post: PostModel) => {
         dispatch(setPostForm(post))
     }
@@ -41,7 +41,9 @@ const PostList = () => {
     return (
         <>
             <div className="grid grid-cols-3 gap-4">
-                {requestState === ERequestState.LOADING && <div>Loading...</div>}
+                {requestState === ERequestState.LOADING && [...Array(6)].map((_, i) => (
+                    <PostCardSkeleton key={i} />
+                ))}
                 {requestState === ERequestState.EMPTY && <div>No Data</div>}
                 {requestState === ERequestState.SUCCESS && data!.map((post) => (
                     <PostCard
