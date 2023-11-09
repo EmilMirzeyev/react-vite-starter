@@ -1,5 +1,4 @@
-export type PostDSO = {
-  id?: number,
-  title: string;
-  description: string;
-};
+import { z } from "zod";
+import { addPostSchema } from "../schemas/formValidations/addPostSchema";
+
+export type PostDSO = z.infer<typeof addPostSchema>;

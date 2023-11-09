@@ -35,7 +35,7 @@ export const useAddPost = () => {
     onMutate: async (post: PostDSO) => {
       await queryClient.cancelQueries({ queryKey: [ERevalidateTags.POSTS] })
       const previousPosts = queryClient.getQueryData([ERevalidateTags.POSTS])
-      queryClient.setQueryData([ERevalidateTags.POSTS], (old: any) => [{id: 123, ...post, isRead: false}, ...old])
+      queryClient.setQueryData([ERevalidateTags.POSTS], (old: any) => [{id: 123, ...post}, ...old])
       return { previousPosts }
     },
     onError: (_error, _variables, context) => {

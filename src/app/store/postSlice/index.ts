@@ -7,6 +7,7 @@ import { type PostSliceType } from "./postSlice";
 const initPostForm: PostDSO = {
   title: "",
   description: "",
+  isRead: false
 }
 
 const initialState: PostSliceType = {

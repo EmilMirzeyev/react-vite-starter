@@ -1,5 +1,5 @@
-import { SyntheticEvent, useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/app/hooks/useRedux";
+import { useState } from "react";
+import { useAppDispatch } from "@/app/hooks/useRedux";
 import { setAllPostFormInputs } from "@/app/store/postSlice";
 import { EButtonVariants } from "@/data/enum/button.enum";
 import { Controller, useForm } from "react-hook-form";
@@ -10,95 +10,77 @@ import Button from "@/ui/shared/Button";
 import Select from "@/ui/shared/Select";
 import Option from "@/ui/shared/Select/Option";
 import Input from "@/ui/shared/Input";
+import { PostDSO } from "@/data/dso/post.dso";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { addPostSchema } from "@/data/schemas/formValidations/addPostSchema";
 
 const selectData = [
-  { id: 0, name: "Bəli" },
-  { id: 1, name: "Xeyr" },
-]
+  { id: 0, name: "Xeyr" },
+  { id: 1, name: "Bəli" },
+];
 
 const PostForm = () => {
   const addPost = useAddPost();
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const postForm = useAppSelector((state) => state.posts.post_form)
-  const [selectValue, setSelectValue] = useState<BaseSelect>({
-    id: null,
-    name: ""
-  })
+  const [selectValue, setSelectValue] = useState<BaseSelect>();
 
   const {
     register,
-    trigger,
+    handleSubmit,
     control,
     formState: { errors },
-  } = useForm<any>()
+  } = useForm<PostDSO>({
+    resolver: zodResolver(addPostSchema),
+  });
 
-  const submitHandler = async (e: SyntheticEvent) => {
-    e.preventDefault()
-    const output = await trigger()
-    output && addPost.mutate(postForm);
+  const submitHandler = (data: PostDSO) => {
+    addPost.mutate(data);
   };
 
   return (
     <div className="flex flex-col gap-y-4">
       <h2>{t("add_post")}</h2>
-      <form className="flex gap-4 justify-center" onSubmit={submitHandler}>
+      <form
+        className="flex gap-4 justify-center"
+        onSubmit={handleSubmit(submitHandler)}
+      >
         <Input
           name="title"
           placeholder="Title"
-          value={postForm.title}
           isDebounce
-          errors={errors}
+          error={errors.title}
           register={register}
-          validationSchema={{
-            required: "Todo text is required",
-            minLength: {
-              value: 3,
-              message: "Please enter a minimum of 3 characters"
-            }
-          }}
           onChange={(value) =>
-            dispatch(
-              setAllPostFormInputs({ key: "title", value})
-            )
+            dispatch(setAllPostFormInputs({ key: "title", value }))
           }
         />
         <Input
           name="description"
           placeholder="Description"
-          value={postForm.description}
           isDebounce
-          errors={errors}
+          error={errors.description}
           register={register}
-          validationSchema={{
-            required: "Todo text is required",
-            minLength: {
-              value: 3,
-              message: "Please enter a minimum of 3 characters"
-            }
-          }}
           onChange={(value) =>
-            dispatch(
-              setAllPostFormInputs({ key: "description", value })
-            )
+            dispatch(setAllPostFormInputs({ key: "description", value }))
           }
         />
-        <Controller control={control}
-          name="select"
-          rules={{
-            required: true,
-          }}
+        <Controller
+          control={control}
+          name="isRead"
           render={({ field: { onChange: onChange } }) => (
-            <Select data={selectData} option={(val) => <Option value={val}>{val.name}</Option>} value={selectValue || ""} onChange={(val) => {
-              onChange(val)
-              setSelectValue(val)
-            }} />
-          )} />
-        {errors.select && (
-          <span role="alert">
-            This field is required
-          </span>
-        )}
+            <Select
+              data={selectData}
+              error={errors.isRead}
+              option={(val) => <Option value={val}>{val.name}</Option>}
+              value={selectValue || { id: null, name: "" }}
+              onChange={(val) => {
+                onChange(Boolean(val.id));
+                setSelectValue(val);
+              }}
+            />
+          )}
+        />
         <Button variant={EButtonVariants.OUTLINED}>Send</Button>
       </form>
     </div>

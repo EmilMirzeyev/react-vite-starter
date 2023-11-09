@@ -8,10 +8,10 @@ export type InputType = Omit<InputHTMLAttributes<HTMLInputElement | HTMLTextArea
     invalid?: boolean;
     name: string;
     register?: UseFormRegister<any>;
-    errors?: FieldErrors<any>;
+    error?: FieldError;
     type?: string;
     validationSchema?: RegisterOptions;
     isDebounce?: boolean;
-    value: string;
+    value?: string;
     onChange: (value: string) => void;
   }
