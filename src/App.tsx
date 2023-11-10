@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import AppRoutes from "./app/routes";
-import Toast from "./ui/shared/Toast";
+import AppRoutes from "@/app/routes";
+import Toast from "@/ui/shared/Toast";
 import { Tooltip } from "react-tooltip";
 
 const queryClient = new QueryClient({

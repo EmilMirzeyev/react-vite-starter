@@ -7,5 +7,5 @@ export const addPostSchema = z.object({
       .min(1, "Title field is required")
       .min(5, "Min 5 characters"),
     description: z.string(),
-    isRead: z.boolean(),
+    isRead: z.number().nullable(),
   });

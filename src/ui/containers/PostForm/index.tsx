@@ -1,9 +1,5 @@
-import { useState } from "react";
-import { useAppDispatch } from "@/app/hooks/useRedux";
-import { setAllPostFormInputs } from "@/app/store/postSlice";
 import { EButtonVariants } from "@/data/enum/button.enum";
 import { Controller, useForm } from "react-hook-form";
-import { BaseSelect } from "@/data/types/base_select";
 import { useAddPost } from "@/app/api/postApi";
 import { useTranslation } from "react-i18next";
 import Button from "@/ui/shared/Button";
@@ -21,14 +17,13 @@ const selectData = [
 
 const PostForm = () => {
   const addPost = useAddPost();
-  const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const [selectValue, setSelectValue] = useState<BaseSelect>();
 
   const {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm<PostDSO>({
     resolver: zodResolver(addPostSchema),
@@ -36,6 +31,7 @@ const PostForm = () => {
 
   const submitHandler = (data: PostDSO) => {
     addPost.mutate(data);
+    reset({title: "", description: "", isRead: null})
   };
 
   return (
@@ -48,35 +44,26 @@ const PostForm = () => {
         <Input
           name="title"
           placeholder="Title"
-          isDebounce
           error={errors.title}
           register={register}
-          onChange={(value) =>
-            dispatch(setAllPostFormInputs({ key: "title", value }))
-          }
         />
         <Input
           name="description"
           placeholder="Description"
-          isDebounce
           error={errors.description}
           register={register}
-          onChange={(value) =>
-            dispatch(setAllPostFormInputs({ key: "description", value }))
-          }
         />
         <Controller
           control={control}
           name="isRead"
-          render={({ field: { onChange: onChange } }) => (
+          render={({ field: { value, onChange } }) => (
             <Select
               data={selectData}
               error={errors.isRead}
+              value={value}
               option={(val) => <Option value={val}>{val.name}</Option>}
-              value={selectValue || { id: null, name: "" }}
               onChange={(val) => {
-                onChange(Boolean(val.id));
-                setSelectValue(val);
+                onChange(val.id);
               }}
             />
           )}

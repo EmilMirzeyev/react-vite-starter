@@ -1,18 +1,34 @@
 import { Listbox, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import UpChevronSVG from "@svg/up_chevron.svg?react";
 import { type SelectType } from "./select";
+import { BaseSelect } from "@/data/types/base_select";
+import { useUpdateEffect } from "@/app/hooks/useUpdateEffect";
 
-const Select = <T,>({
+const Select = ({
   data,
   option,
   value,
   error,
   onChange,
-}: SelectType<T>) => {
+}: SelectType) => {
+  const newVal = (value === undefined || value === null) ? { id: null, name: "" } : typeof value === "number" ? data.find((d) => d.id === value) as BaseSelect : value
+  const [innerValue, setInnerValue] = useState<BaseSelect>(newVal);
+
+  useUpdateEffect(() => {
+    value === null && setInnerValue({ id: null, name: "" })
+  }, [value])
+  
+  
   return (
     <div className="w-72">
-      <Listbox value={value} onChange={onChange}>
+      <Listbox
+        value={innerValue}
+        onChange={(val) => {
+          setInnerValue(val);
+          onChange(val);
+        }}
+      >
         {({ open }) => {
           return (
             <div className="relative mt-1">
@@ -22,7 +38,7 @@ const Select = <T,>({
                   Boolean(error) ? "border border-red" : "",
                 ].join(" ")}
               >
-                <span className="block truncate">{value?.name || "Seçin"}</span>
+                <span className="block truncate">{innerValue?.name || "Seçin"}</span>
                 <span
                   className={[
                     "pointer-events-none absolute duration-300 ease-in right-3 flex inset-y-0 items-center",
@@ -49,10 +65,10 @@ const Select = <T,>({
         }}
       </Listbox>
       {error && (
-          <span role="alert" className="error">
-            {error.message}
-          </span>
-        )}
+        <span role="alert" className="error">
+          {error.message}
+        </span>
+      )}
     </div>
   );
 };
