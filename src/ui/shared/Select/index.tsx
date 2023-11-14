@@ -1,8 +1,8 @@
 import { Listbox, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import UpChevronSVG from "@svg/up_chevron.svg?react";
-import { type SelectType } from "./select";
-import { BaseSelect } from "@/data/types/base_select";
+import { type TSelect } from "./TSelect";
+import { TBaseSelect } from "@/data/types/TBaseSelect";
 import { useUpdateEffect } from "@/app/hooks/useUpdateEffect";
 
 const Select = ({
@@ -11,9 +11,9 @@ const Select = ({
   value,
   error,
   onChange,
-}: SelectType) => {
-  const newVal = (value === undefined || value === null) ? { id: null, name: "" } : typeof value === "number" ? data.find((d) => d.id === value) as BaseSelect : value
-  const [innerValue, setInnerValue] = useState<BaseSelect>(newVal);
+}: TSelect) => {
+  const newVal = (value === undefined || value === null) ? { id: null, name: "" } : typeof value === "number" ? data.find((d) => d.id === value) as TBaseSelect : value
+  const [innerValue, setInnerValue] = useState<TBaseSelect>(newVal);
 
   useUpdateEffect(() => {
     value === null && setInnerValue({ id: null, name: "" })

@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { EButtonVariants } from "@/data/enum/button.enum";
-import { type ButtonType } from "./button";
+import { type TButton } from "./TButton";
 import { twMerge } from "tailwind-merge";
 
 const Button = ({
@@ -10,7 +10,7 @@ const Button = ({
     disabled,
     children,
     ...props
-}: ButtonType) => {
+}: TButton) => {
     
     const variants: Record<EButtonVariants, () => string> = {
         [EButtonVariants.FILLED]() {

@@ -1,7 +1,7 @@
 import { Listbox } from '@headlessui/react'
-import { OptionType } from './select'
+import { TOption } from './TSelect'
 
-const Option = ({ children, value }: OptionType) => {
+const Option = ({ children, value }: TOption) => {
     return (
         <Listbox.Option
             key={value.id}

@@ -2,9 +2,9 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { AppDispatch } from '..'
 import { EToast } from '@/data/enum/toast.enum'
-import { ToastType } from '@/data/types/toast'
+import { TToast } from '@/ui/shared/Toast/TToast'
 
-const initialState: { toastList: ToastType[] } = {
+const initialState: { toastList: TToast[] } = {
     toastList: []
 }
 
@@ -12,7 +12,7 @@ export const toastSlice = createSlice({
     name: 'toast',
     initialState,
     reducers: {
-        addToast: (state, action: PayloadAction<ToastType>) => {
+        addToast: (state, action: PayloadAction<TToast>) => {
             state.toastList.push({ id: action.payload.id, message: action.payload.message, type: action.payload.type });
         },
         removeToast: (state) => {

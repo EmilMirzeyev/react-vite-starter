@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import { InputType } from "./input";
+import { TInput } from "./TInput";
 import { useDebounce } from "@/app/hooks/useDebounce";
 import { useUpdateEffect } from "@/app/hooks/useUpdateEffect";
 
@@ -15,7 +15,7 @@ const Input = ({
   isDebounce = true,
   onChange,
   ...props
-}: InputType) => {
+}: TInput) => {
   const [innerValue, setInnerValue] = useState(value || "");
   const debouncedValue = useDebounce<string>(innerValue, 500);
 

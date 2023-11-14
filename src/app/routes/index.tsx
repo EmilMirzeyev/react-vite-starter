@@ -1,8 +1,8 @@
-import { useRoutes } from "react-router-dom";
+import { RouteObject, useRoutes } from "react-router-dom";
+import { lazy } from "react";
 import NotFound from "@/ui/pages/common/NotFound";
 import AuthProtectedRoute from "@/app/routes/auth-protected-route";
 import MainLayout from "@/ui/layout/MainLayout";
-import { lazy } from "react";
 
 const LoginPage = lazy(() => import("@/ui/pages/auth/LoginPage"));
 const PostsPage = lazy(() => import("@/ui/pages/posts/PostsPage"));
@@ -11,8 +11,10 @@ const PostDetailsPage = lazy(
 );
 const HomePage = lazy(() => import("@/ui/pages/home/HomePage"));
 
+
+
 const AppRoutes = () => {
-  const routesConfig = [
+  const routesConfig: RouteObject[] = [
     {
       path: "/login",
       element: <LoginPage />,
