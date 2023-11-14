@@ -3,17 +3,13 @@ import NotFound from "@/ui/pages/common/NotFound";
 import AuthProtectedRoute from "@/app/routes/auth-protected-route";
 import MainLayout from "@/ui/layout/MainLayout";
 import { lazy } from "react";
-// import LoginPage from "@/ui/pages/auth/LoginPage";
-// import PostsPage from "@/ui/pages/posts/PostsPage";
-// import PostDetailsPage from "@/ui/pages/posts/details/PostDetailsPage";
 
 const LoginPage = lazy(() => import("@/ui/pages/auth/LoginPage"));
 const PostsPage = lazy(() => import("@/ui/pages/posts/PostsPage"));
-const PostDetailsPage = lazy(() => import("@/ui/pages/posts/details/PostDetailsPage"));
-
-// const LoginPage = lazyLoad("@/ui/pages/auth/LoginPage");
-// const PostsPage = lazyLoad("@/ui/pages/posts/PostsPage");
-// const PostDetailsPage = lazyLoad("@/ui/pages/posts/details/PostDetailsPage");
+const PostDetailsPage = lazy(
+  () => import("@/ui/pages/posts/details/PostDetailsPage")
+);
+const HomePage = lazy(() => import("@/ui/pages/home/HomePage"));
 
 const AppRoutes = () => {
   const routesConfig = [
@@ -28,18 +24,22 @@ const AppRoutes = () => {
           element: <MainLayout />,
           children: [
             {
+              path: "/",
+              element: <HomePage />,
+            },
+            {
               path: "/posts/*",
               children: [
                 {
                   index: true,
-                  element: <PostsPage />
+                  element: <PostsPage />,
                 },
                 {
                   path: ":postId",
-                  element: <PostDetailsPage />
-                }
-              ]
-            }
+                  element: <PostDetailsPage />,
+                },
+              ],
+            },
           ],
         },
       ],

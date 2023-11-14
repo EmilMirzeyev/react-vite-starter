@@ -4,7 +4,7 @@ import { Suspense } from "react";
 
 const MainLayout = () => {
   return (
-    <div className="w-full min-h-screen flex flex-col">
+    <div className="w-full min-h-screen grid grid-rows-[56px_1fr_56px]">
       <Header />
       <Suspense
         fallback={
