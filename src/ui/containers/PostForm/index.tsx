@@ -9,11 +9,14 @@ import Input from "@/ui/shared/Input";
 import { PostDSO } from "@/data/dso/post.dso";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { addPostSchema } from "@/data/schemas/formValidations/addPostSchema";
+import { useUpdateEffect } from "@/app/hooks/useUpdateEffect";
 
 const selectData = [
   { id: 0, name: "Xeyr" },
   { id: 1, name: "Bəli" },
 ];
+
+const resetForm = { title: "", description: "", isRead: null };
 
 const PostForm = () => {
   const addPost = useAddPost();
@@ -31,15 +34,23 @@ const PostForm = () => {
 
   const submitHandler = (data: PostDSO) => {
     addPost.mutate(data);
-    reset({title: "", description: "", isRead: null})
   };
 
+  //Temporary
+  const onError = (data: any) => {
+    console.error(data);
+  };
+
+  useUpdateEffect(() => {
+    reset(resetForm);
+  }, [addPost.isSuccess]);
+  
   return (
     <div className="flex flex-col gap-y-4">
       <h2>{t("add_post")}</h2>
       <form
         className="flex gap-4 justify-center"
-        onSubmit={handleSubmit(submitHandler)}
+        onSubmit={handleSubmit(submitHandler, onError)}
       >
         <Input
           name="title"

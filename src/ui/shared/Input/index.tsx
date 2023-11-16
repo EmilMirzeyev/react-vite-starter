@@ -44,6 +44,7 @@ const Input = ({
           {...register?.(name)}
           value={value}
           className="w-full dark:bg-softBlack dark:text-white"
+          onKeyDown={(e) => (type === "number" && ["e", "+"].includes(e.key)) && e.preventDefault()}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
             isDebounce
               ? setInnerValue(e.target.value)

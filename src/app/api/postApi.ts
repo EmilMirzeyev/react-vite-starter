@@ -6,6 +6,7 @@ import { useAppDispatch } from '@/app/hooks/useRedux';
 import { errorToast, successToast } from '@/app/store/root/toastSlice';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { PostModel } from '@/data/model/post.model';
+import { mutate } from '../helpers/mutate';
 
 export const usePosts = (query: string = "") => {
   return useQuery({
@@ -33,14 +34,15 @@ export const useAddPost = () => {
       return post_repository.addPost(post);
     },
     onMutate: async (post: PostDSO) => {
-      await queryClient.cancelQueries({ queryKey: [ERevalidateTags.POSTS] })
-      const previousPosts = queryClient.getQueryData([ERevalidateTags.POSTS])
-      queryClient.setQueryData([ERevalidateTags.POSTS], (old: PostModel[]) => [{id: 123, ...post}, ...old])
-      return { previousPosts }
+      return mutate<PostModel[]>({
+        queryClient,
+        queryKey: [ERevalidateTags.POSTS],
+        updateFunction: (old) => [{id: 123, ...post}, ...old] as PostModel[],
+      });
     },
     onError: (_error, _variables, context) => {
       dispatch(errorToast(i18n.t("post_error")))
-      queryClient.setQueryData([ERevalidateTags.POSTS], context?.previousPosts)
+      queryClient.setQueryData([ERevalidateTags.POSTS], context?.previousData)
     },
     onSuccess: (_data, _variables) => {
       dispatch(successToast(i18n.t("post_success")))
@@ -59,14 +61,15 @@ export const useDeletePost = () => {
       return post_repository.deletePost(id);
     },
     onMutate: async (id: number) => {
-      await queryClient.cancelQueries({ queryKey: [ERevalidateTags.POSTS] })
-      const previousPosts = queryClient.getQueryData([ERevalidateTags.POSTS])
-      queryClient.setQueryData([ERevalidateTags.POSTS], (old: PostModel[]) => old.filter((d) => d.id !== id))
-      return { previousPosts }
+      return mutate<PostModel[]>({
+        queryClient,
+        queryKey: [ERevalidateTags.POSTS],
+        updateFunction: (old) => old.filter((d) => d.id !== id),
+      });
     },
     onError: (_error, _variables, context) => {
       dispatch(errorToast(i18n.t("post cant deleted")))
-      queryClient.setQueryData([ERevalidateTags.POSTS], context?.previousPosts)
+      queryClient.setQueryData([ERevalidateTags.POSTS], context?.previousData)
     },
     onSuccess: (_data, _variables) => {
       dispatch(successToast(i18n.t("post deleted")))
