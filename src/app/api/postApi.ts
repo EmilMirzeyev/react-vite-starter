@@ -1,5 +1,4 @@
-import { type PostDSO } from '@/data/dso/post.dso';
-import post_repository from "@/app/repositories/implementation/post_repository";
+import post_repository from "@/app/repositories/post_repository";
 import { ERevalidateTags } from "@/data/enum/revalidate_tags.enum";
 import i18n from '@/app/lib/i18next.config';
 import { useAppDispatch } from '@/app/hooks/useRedux';
@@ -30,14 +29,14 @@ export const useAddPost = () => {
   const queryClient = useQueryClient();
   const dispatch = useAppDispatch()
   return useMutation({
-    mutationFn: (post: PostDSO) => {
+    mutationFn: (post: PostModel) => {
       return post_repository.addPost(post);
     },
-    onMutate: async (post: PostDSO) => {
+    onMutate: async (post: Omit<PostModel, "id">) => {
       return mutate<PostModel[]>({
         queryClient,
         queryKey: [ERevalidateTags.POSTS],
-        updateFunction: (old) => [{id: 123, ...post}, ...old] as PostModel[],
+        updateFunction: (old) => [{id: 456, ...post}, ...old],
       });
     },
     onError: (_error, _variables, context) => {
