@@ -1,4 +1,4 @@
-import post_repository from "@/app/repositories/post_repository";
+import post_repository from "@/app/repositories/PostRepository";
 import { ERevalidateTags } from "@/data/enum/revalidate_tags.enum";
 import i18n from '@/app/lib/i18next.config';
 import { useAppDispatch } from '@/app/hooks/useRedux';

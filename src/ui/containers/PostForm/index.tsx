@@ -1,47 +1,18 @@
 import { EButtonVariants } from "@/data/enum/button.enum";
-import { Controller, FieldErrors, useForm } from "react-hook-form";
-import { useAddPost } from "@/app/api/postApi";
-import { useTranslation } from "react-i18next";
+import { Controller } from "react-hook-form";
 import Button from "@/ui/shared/Button";
 import Select from "@/ui/shared/Select";
 import Input from "@/ui/shared/Input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { addPostSchema } from "@/data/schemas/formValidations/addPostSchema";
-import { PostModel } from "@/data/model/post.model";
+import { PostFormVM } from "./PostFormVM";
 
 const selectData = [
   { id: 0, name: "Xeyr" },
   { id: 1, name: "Bəli" },
 ];
 
-const resetForm = { title: "", description: "", isRead: null };
-
 const PostForm = () => {
-  const addPost = useAddPost();
-  const { t } = useTranslation();
-
-  const {
-    register,
-    handleSubmit,
-    control,
-    reset,
-    formState: { errors },
-  } = useForm<PostModel>({
-    resolver: zodResolver(addPostSchema),
-    defaultValues: resetForm,
-  });
-
-  const submitHandler = (data: PostModel) => {
-    addPost.mutate(data, {
-      onSuccess() {
-        reset();
-      },
-    });
-  };
-
-  const onError = (data: FieldErrors<PostModel>) => {
-    console.error(data);
-  };
+  const { t, handleSubmit, errors, control, register, submitHandler, onError } =
+    PostFormVM();
 
   return (
     <div className="flex flex-col gap-y-4">

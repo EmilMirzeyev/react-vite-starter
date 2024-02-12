@@ -1,4 +1,4 @@
 export const endpoints = {
     posts: (query: string = "") => `/posts${query}`,
-    post: (id: number) => `/postss/${id}`
+    post: (id: number) => `/posts/${id}`
 }
