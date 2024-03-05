@@ -16,17 +16,17 @@ export const PostFormVM = () => {
     defaultValues: resetForm,
   });
 
+  const onError = (data: FieldErrors<PostModel>) => {
+    console.error("error:", data);
+  };
+
   const submitHandler = methods.handleSubmit((data: PostModel) => {
     addPost.mutate(data, {
       onSuccess() {
         methods.reset();
       },
     });
-  });
+  }, onError);
 
-  const onError = (data: FieldErrors<PostModel>) => {
-    console.error(data);
-  };
-
-  return { t, methods, submitHandler, onError };
+  return { t, methods, submitHandler };
 };
