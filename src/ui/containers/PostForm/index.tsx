@@ -4,42 +4,31 @@ import Button from "@/ui/shared/Button";
 import Select from "@/ui/shared/Select";
 import Input from "@/ui/shared/Input";
 import { PostFormVM } from "./PostFormVM";
-
-const selectData = [
-  { id: 0, name: "Xeyr" },
-  { id: 1, name: "Bəli" },
-];
+import Form from "@/ui/shared/Form";
 
 const PostForm = () => {
-  const { t, handleSubmit, errors, control, register, submitHandler, onError } =
-    PostFormVM();
+  const { t, methods, submitHandler } = PostFormVM();
 
   return (
     <div className="flex flex-col gap-y-4">
       <h2>{t("add_post")}</h2>
-      <form
+      <Form
         className="flex gap-4 justify-center"
-        onSubmit={handleSubmit(submitHandler, onError)}
+        onSubmit={submitHandler}
+        methods={methods}
       >
-        <Input
-          name="title"
-          placeholder="Title"
-          error={errors.title}
-          register={register}
-        />
-        <Input
-          name="description"
-          placeholder="Description"
-          error={errors.description}
-          register={register}
-        />
+        <Input name="title" placeholder="Title" />
+        <Input name="description" placeholder="Description" />
         <Controller
-          control={control}
+          control={methods.control}
           name="isRead"
           render={({ field: { value, onChange } }) => (
             <Select
-              data={selectData}
-              error={errors.isRead}
+              data={[
+                { id: 0, name: "Xeyr" },
+                { id: 1, name: "Bəli" },
+              ]}
+              error={methods.formState.errors.isRead}
               value={value}
               option={(val, selected) => (
                 <Select.Option value={val} selected={selected}>
@@ -53,7 +42,7 @@ const PostForm = () => {
           )}
         />
         <Button variant={EButtonVariants.OUTLINED}>Send</Button>
-      </form>
+      </Form>
     </div>
   );
 };

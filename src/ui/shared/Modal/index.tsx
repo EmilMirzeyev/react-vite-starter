@@ -7,7 +7,7 @@ const Modal = ({
   dialogClassName,
   visible,
   clickOutside = true,
-  setVisible
+  setVisible,
 }: TModal) => {
   return (
     <Transition show={visible} as={Fragment}>

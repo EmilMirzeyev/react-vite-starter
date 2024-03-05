@@ -3,7 +3,10 @@ import { UseFormRegister, FieldError } from "react-hook-form";
 
 //TODO: if onDebounce works isDebounce required
 
-export type TInput = Omit<InputHTMLAttributes<HTMLInputElement>, "value" | "onChange"> & {
+export type TInput = Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  "value" | "onChange"
+> & {
   label?: string;
   placeholder?: string;
   leading?: ReactNode;
@@ -15,5 +18,5 @@ export type TInput = Omit<InputHTMLAttributes<HTMLInputElement>, "value" | "onCh
   isDebounce?: boolean;
   inputClassName?: string;
   onChange?: (value: string) => void;
-  onDebounce?: (val: string) => void;
+  onDebounce?: (value: string) => void;
 };

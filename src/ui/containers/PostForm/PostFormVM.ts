@@ -11,28 +11,22 @@ export const PostFormVM = () => {
   const addPost = useAddPost();
   const { t } = useTranslation();
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    reset,
-    formState: { errors },
-  } = useForm<PostModel>({
+  const methods = useForm<PostModel>({
     resolver: zodResolver(addPostSchema),
     defaultValues: resetForm,
   });
 
-  const submitHandler = (data: PostModel) => {
+  const submitHandler = methods.handleSubmit((data: PostModel) => {
     addPost.mutate(data, {
       onSuccess() {
-        reset();
+        methods.reset();
       },
     });
-  };
+  });
 
   const onError = (data: FieldErrors<PostModel>) => {
     console.error(data);
   };
 
-  return { t, handleSubmit, errors, control, register, submitHandler, onError };
+  return { t, methods, submitHandler, onError };
 };

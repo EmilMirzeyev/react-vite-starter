@@ -1,14 +1,14 @@
 import { Listbox, Transition } from "@headlessui/react";
-import { Fragment, MouseEvent, useState } from "react";
+import { Fragment } from "react";
 import { type TSelect } from "./TSelect";
 import SelectOption from "./SelectOption";
 import { twMerge } from "tailwind-merge";
 import UpChevronSVG from "@svg/up_chevron.svg?react";
 import XSVG from "@svg/x.svg?react";
-import { TBaseSelect } from "@/data/types/TBaseSelect";
-import { useUpdateEffect } from "@/app/hooks/useUpdateEffect";
+import { BaseModel } from "@/data/model/base.model";
+import { SelectVM } from "./SelectVM";
 
-const Select = <T extends TBaseSelect>({
+const Select = <T extends BaseModel>({
   data,
   option,
   className,
@@ -18,28 +18,18 @@ const Select = <T extends TBaseSelect>({
   error,
   onChange,
 }: TSelect<T>) => {
-  const newVal = (val: null | undefined | number | TBaseSelect) =>
-    val === undefined || val === null
-      ? { id: null, name: "" }
-      : typeof val === "number"
-      ? (data.find((d) => d.id === val) as TBaseSelect)
-      : val;
-  const [innerValue, setInnerValue] = useState<TBaseSelect>(newVal(value));
-
-  const handleSelect = (val: TBaseSelect) => {
-    setInnerValue(val);
-    onChange(val);
-  };
-
-  useUpdateEffect(() => {
-    value !== null
-      ? setInnerValue(newVal(value))
-      : setInnerValue({ id: null, name: "" });
-  }, [value]);
+  const { innerValue, handleSelect, resetHandler } = SelectVM({
+    data,
+    value,
+    onChange,
+  });
 
   return (
     <div className={twMerge("w-full", className)}>
-      <Listbox value={innerValue} onChange={(val) => handleSelect(val)}>
+      <Listbox
+        value={innerValue}
+        onChange={(val) => handleSelect(val as BaseModel)}
+      >
         {({ open }) => {
           return (
             <div className="relative">
@@ -71,13 +61,7 @@ const Select = <T extends TBaseSelect>({
                 <div className={`flex items-center gap-2 pl-3 ml-auto`}>
                   {innerValue?.id !== null && hasReset && (
                     <div className="bg-gray-200 rounded-full cursor-pointer w-6 h-6 flex items-center justify-center">
-                      <XSVG
-                        onClick={(e: MouseEvent<SVGSVGElement>) => {
-                          e.stopPropagation();
-                          setInnerValue({ id: null, name: "" });
-                          onChange({ id: null, name: "" });
-                        }}
-                      />
+                      <XSVG onClick={resetHandler} />
                     </div>
                   )}
                   <span

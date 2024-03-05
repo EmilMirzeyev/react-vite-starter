@@ -1,7 +1,5 @@
-import { ChangeEvent, useState } from "react";
 import { TInput } from "./TInput";
-import { useDebounce } from "@/app/hooks/useDebounce";
-import { useUpdateEffect } from "@/app/hooks/useUpdateEffect";
+import { InputVM } from "./InputVM";
 
 const Input = ({
   label,
@@ -17,13 +15,13 @@ const Input = ({
   onDebounce,
   ...props
 }: TInput) => {
-  const [innerValue, setInnerValue] = useState<string | null>(null);
-  const [dirty, setDirty] = useState(false);
-  const debouncedValue = useDebounce<string>(innerValue!, 500);
-
-  useUpdateEffect(() => {
-    dirty && isDebounce && onDebounce?.(innerValue!);
-  }, [debouncedValue]);
+  const { reg, hasMethods, methods, keyDownHandler, changeHandler } = InputVM({
+    name,
+    type,
+    isDebounce,
+    onDebounce,
+    onChange,
+  });
 
   return (
     <div className="w-full">
@@ -41,23 +39,15 @@ const Input = ({
             aria-label={name}
             id={name}
             type={type}
+            {...reg}
             {...props}
-            {...register?.(name)}
             placeholder={label ? " " : placeholder}
             className={[
               "w-full h-full peer text-15px400",
               label ? "pt-3" : "",
             ].join(" ")}
-            onKeyDown={(e) =>
-              type === "number" &&
-              ["e", "+"].includes(e.key) &&
-              e.preventDefault()
-            }
-            onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              isDebounce && setInnerValue(e.target.value);
-              !dirty && setDirty(true);
-              onChange?.(e.target.value);
-            }}
+            onKeyDown={keyDownHandler}
+            onChange={changeHandler}
           />
 
           {label && (
@@ -71,9 +61,9 @@ const Input = ({
         </div>
         {trailing}
       </div>
-      {error && (
+      {hasMethods && methods.formState.errors[name] && (
         <span role="alert" className="text-error-500 text-14px400">
-          {error.message}
+          {methods.formState.errors[name]!.message as string}
         </span>
       )}
     </div>
