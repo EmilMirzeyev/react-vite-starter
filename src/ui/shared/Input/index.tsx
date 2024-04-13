@@ -30,7 +30,7 @@ const Input = ({
           `relative flex items-center gap-x-4 px-4 border h-14 border-solid rounded-lg ${
             props?.disabled ? "bg-gray-100" : "bg-white"
           }`,
-          Boolean(error) ? "border-error-500" : "border-softBlack",
+          (hasMethods && methods.formState.errors[name]) ? "border-red" : "border-softBlack",
         ].join(" ")}
       >
         {leading}
@@ -39,8 +39,6 @@ const Input = ({
             aria-label={name}
             id={name}
             type={type}
-            {...reg}
-            {...props}
             placeholder={label ? " " : placeholder}
             className={[
               "w-full h-full peer text-15px400",
@@ -48,6 +46,8 @@ const Input = ({
             ].join(" ")}
             onKeyDown={keyDownHandler}
             onChange={changeHandler}
+            {...props}
+            {...reg}
           />
 
           {label && (
@@ -62,7 +62,7 @@ const Input = ({
         {trailing}
       </div>
       {hasMethods && methods.formState.errors[name] && (
-        <span role="alert" className="text-error-500 text-14px400">
+        <span role="alert" className="text-red text-14px400">
           {methods.formState.errors[name]!.message as string}
         </span>
       )}
