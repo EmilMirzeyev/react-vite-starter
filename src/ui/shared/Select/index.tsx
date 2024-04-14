@@ -1,42 +1,43 @@
 import { Listbox, Transition } from "@headlessui/react";
-import { Fragment } from "react";
-import { type TSelect } from "./TSelect";
-import SelectOption from "./SelectOption";
+import { Fragment, ReactElement } from "react";
 import { twMerge } from "tailwind-merge";
 import UpChevronSVG from "@svg/up_chevron.svg?react";
 import XSVG from "@svg/x.svg?react";
-import { BaseModel } from "@/data/model/base.model";
 import { SelectVM } from "./SelectVM";
+import type { SelectDataType, SelectType } from "./select.type";
+import { SelectOptionVariantEnum } from "./select.enum";
+import SelectOptionFactory from "./SelectOptionFactory";
 
-const Select = <T extends BaseModel>({
+const Select = <T extends SelectDataType>({
   data,
-  option,
   className,
   label,
+  name,
   hasReset = true,
+  variant = SelectOptionVariantEnum.BASE,
   value,
-  error,
   onChange,
-}: TSelect<T>) => {
-  const { innerValue, handleSelect, resetHandler } = SelectVM({
-    data,
-    value,
-    onChange,
-  });
+}: SelectType<T>): ReactElement => {
+  const { innerValue, handleSelect, resetHandler, hasMethods, methods } =
+    SelectVM({
+      data,
+      value,
+      name,
+      onChange,
+    });
 
   return (
     <div className={twMerge("w-full", className)}>
-      <Listbox
-        value={innerValue}
-        onChange={(val) => handleSelect(val as BaseModel)}
-      >
+      <Listbox value={innerValue} onChange={handleSelect}>
         {({ open }) => {
           return (
             <div className="relative">
               <Listbox.Button
                 className={[
                   "relative flex items-center justify-between w-full cursor-default h-14 rounded-lg bg-white py-2 p-3 border text-left sm:text-sm",
-                  error ? "border-error-500" : "border-gray-400",
+                  hasMethods && methods.formState.errors[name] && methods.formState.submitCount > 0
+                    ? "border-red"
+                    : "border-gray-400",
                 ].join(" ")}
               >
                 {label && (
@@ -56,12 +57,12 @@ const Select = <T extends BaseModel>({
                     innerValue.id !== null && !!label ? "translate-y-1.5" : "",
                   ].join(" ")}
                 >
-                  {innerValue.id !== null ? innerValue?.name : label || "Seçin"}
+                  {innerValue.id !== null ? innerValue.name : label || "Seçin"}
                 </span>
                 <div className={`flex items-center gap-2 pl-3 ml-auto`}>
                   {innerValue?.id !== null && hasReset && (
                     <div className="bg-gray-200 rounded-full cursor-pointer w-6 h-6 flex items-center justify-center">
-                      <XSVG onClick={resetHandler} />
+                      <XSVG className="w-3 h-3" onClick={resetHandler} />
                     </div>
                   )}
                   <span
@@ -70,7 +71,7 @@ const Select = <T extends BaseModel>({
                       open ? "-rotate-0" : "rotate-180",
                     ].join(" ")}
                   >
-                    <UpChevronSVG className="w-3 h-3 text-gray" />
+                    <UpChevronSVG className="w-3 h-3" />
                   </span>
                 </div>
               </Listbox.Button>
@@ -81,10 +82,13 @@ const Select = <T extends BaseModel>({
                 leaveTo="opacity-0"
               >
                 <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white p-1 ring-1 ring-black/5 z-50">
-                  {data.map((d: T) => (
-                    <Fragment key={d.id}>
-                      {option(d, innerValue.id === d.id)}
-                    </Fragment>
+                  {data.map((d) => (
+                    <SelectOptionFactory
+                      key={d.id}
+                      data={d}
+                      selected={innerValue.id === d.id}
+                      variant={variant}
+                    />
                   ))}
                 </Listbox.Options>
               </Transition>
@@ -92,15 +96,13 @@ const Select = <T extends BaseModel>({
           );
         }}
       </Listbox>
-      {error && (
-        <span role="alert" className="text-error-500 text-14px400">
-          {error.message}
+      {hasMethods && methods.formState.errors[name] && methods.formState.submitCount > 0 && (
+        <span role="alert" className="text-red text-14px400">
+          {methods.formState.errors[name]!.message as string}
         </span>
       )}
     </div>
   );
 };
-
-Select.Option = SelectOption;
 
 export default Select;

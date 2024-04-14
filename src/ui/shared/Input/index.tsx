@@ -6,8 +6,6 @@ const Input = ({
   leading,
   trailing,
   name,
-  register,
-  error,
   type,
   isDebounce = false,
   placeholder,

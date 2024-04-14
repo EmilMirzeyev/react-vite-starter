@@ -1,5 +1,4 @@
 import { EButtonVariants } from "@/data/enum/button.enum";
-import { Controller } from "react-hook-form";
 import Button from "@/ui/shared/Button";
 import Select from "@/ui/shared/Select";
 import Input from "@/ui/shared/Input";
@@ -19,27 +18,13 @@ const PostForm = () => {
       >
         <Input name="title" placeholder="Title" />
         <Input name="description" placeholder="Description" />
-        <Controller
-          control={methods.control}
+
+        <Select
           name="isRead"
-          render={({ field: { value, onChange } }) => (
-            <Select
-              data={[
-                { id: 0, name: "Xeyr" },
-                { id: 1, name: "Bəli" },
-              ]}
-              error={methods.formState.errors.isRead}
-              value={value}
-              option={(val, selected) => (
-                <Select.Option value={val} selected={selected}>
-                  {val.name}
-                </Select.Option>
-              )}
-              onChange={(val) => {
-                onChange(val.id);
-              }}
-            />
-          )}
+          data={[
+            { id: 0, name: "Xeyr" },
+            { id: 1, name: "Bəli" },
+          ]}
         />
         <Button variant={EButtonVariants.OUTLINED}>Send</Button>
       </Form>
