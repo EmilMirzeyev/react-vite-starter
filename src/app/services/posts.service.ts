@@ -6,12 +6,13 @@ import { validator } from "../utils/validator";
 import {
   postSchema,
   postsApiSchema,
-} from "@/data/schemas/dtoValidations/postSchema";
+} from "@/data/schemas/dtoValidations/post.schema";
 
 export const getPostsService = async (query: string) => {
   const res = await axiosInstance.get<PostDTO[]>(endpoints.posts(query));
 
   return validator({
+    endpoint: endpoints.posts(query),
     schema: postsApiSchema,
     response: res.data,
   });
@@ -21,6 +22,7 @@ export const getPostService = async (id: number) => {
   const res = await axiosInstance.get<PostDTO>(endpoints.post(id));
 
   return validator({
+    endpoint: endpoints.post(id),
     schema: postSchema,
     response: res.data,
   });

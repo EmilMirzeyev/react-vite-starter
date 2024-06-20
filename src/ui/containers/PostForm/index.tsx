@@ -2,7 +2,7 @@ import { EButtonVariants } from "@/data/enum/button.enum";
 import Button from "@/ui/shared/Button";
 import Select from "@/ui/shared/Select";
 import Input from "@/ui/shared/Input";
-import { PostFormVM } from "./PostFormVM";
+import { PostFormVM } from "./post_form.vm";
 import Form from "@/ui/shared/Form";
 
 const PostForm = () => {

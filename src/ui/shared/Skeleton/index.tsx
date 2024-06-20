@@ -1,11 +1,13 @@
-import { TSkeleton } from "./TSkeleton";
+import type { SkeletonType } from "./skeleton.type";
 
-const Shimmer = ({ className = "w-full h-full min-h-[16px]" }: TSkeleton) => {
-  
+const Skeleton = ({
+  className = "w-full h-full min-h-[16px]",
+}: SkeletonType) => {
   return (
-    <div className={`animate-pulse bg-gradient-to-r from-gray/70 to-gray/50 rounded ${className}`}>
-    </div>
+    <div
+      className={`animate-pulse bg-gradient-to-r from-gray/70 to-gray/50 rounded ${className}`}
+    ></div>
   );
 };
 
-export default Shimmer;
+export default Skeleton;

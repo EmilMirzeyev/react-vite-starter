@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { HeaderVM } from "./HeaderVM";
+import { HeaderVM } from "./header.vm";
 
 const Header = () => {
   const { languages, handleLocale } = HeaderVM();

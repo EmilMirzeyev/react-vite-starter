@@ -1,5 +1,6 @@
-import { TInput } from "./TInput";
-import { InputVM } from "./InputVM";
+import { handleError } from "@/app/helpers/handleError";
+import type { InputType } from "./input.type";
+import { InputVM } from "./input.vm";
 
 const Input = ({
   label,
@@ -12,7 +13,7 @@ const Input = ({
   onChange,
   onDebounce,
   ...props
-}: TInput) => {
+}: InputType) => {
   const { reg, hasMethods, methods, keyDownHandler, changeHandler } = InputVM({
     name,
     type,
@@ -28,7 +29,9 @@ const Input = ({
           `relative flex items-center gap-x-4 px-4 border h-14 border-solid rounded-lg ${
             props?.disabled ? "bg-gray-100" : "bg-white"
           }`,
-          (hasMethods && methods.formState.errors[name]) ? "border-red" : "border-softBlack",
+          hasMethods && handleError(name, methods)
+            ? "border-red"
+            : "border-softBlack",
         ].join(" ")}
       >
         {leading}
@@ -59,11 +62,11 @@ const Input = ({
         </div>
         {trailing}
       </div>
-      {hasMethods && methods.formState.errors[name] && (
+      {hasMethods && Object.values(methods.formState.errors).length ? (
         <span role="alert" className="text-red text-14px400">
-          {methods.formState.errors[name]!.message as string}
+          {handleError(name, methods)}
         </span>
-      )}
+      ) : null}
     </div>
   );
 };

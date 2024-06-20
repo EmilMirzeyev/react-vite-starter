@@ -1,7 +1,7 @@
 import { EButtonVariants } from "@/data/enum/button.enum";
-import { type TButton } from "./TButton";
 import { twMerge } from "tailwind-merge";
-import { ButtonVM } from "./ButtonVM";
+import { ButtonVM } from "./button.vm";
+import { ButtonType } from "./button.type";
 
 const Button = ({
   variant = EButtonVariants.FILLED,
@@ -10,7 +10,7 @@ const Button = ({
   disabled,
   children,
   ...props
-}: TButton) => {
+}: ButtonType) => {
   const { variants, rippleEffect } = ButtonVM();
 
   return (

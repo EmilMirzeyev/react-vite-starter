@@ -1,9 +1,9 @@
-import { FieldErrors, useForm } from "react-hook-form";
+import { type FieldErrors, useForm } from "react-hook-form";
 import { useAddPost } from "@/app/api/postApi";
 import { useTranslation } from "react-i18next";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { addPostSchema } from "@/data/schemas/formValidations/addPostSchema";
-import { PostModel } from "@/data/model/post.model";
+import { addPostSchema } from "@/data/schemas/formValidations/addPost.schema";
+import type { PostModel } from "@/data/model/post.model";
 
 const resetForm = { title: "", description: "", isRead: null };
 

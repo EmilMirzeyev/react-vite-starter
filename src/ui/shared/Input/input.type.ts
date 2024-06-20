@@ -2,7 +2,7 @@ import { ReactNode, InputHTMLAttributes } from "react";
 
 //TODO: if onDebounce works isDebounce required
 
-export type TInput = Omit<
+export type InputType = Omit<
   InputHTMLAttributes<HTMLInputElement>,
   "value" | "onChange"
 > & {

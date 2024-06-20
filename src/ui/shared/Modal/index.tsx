@@ -1,6 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import { TModal } from "./TModal";
+import type { ModalType } from "./modal.type";
 
 const Modal = ({
   children,
@@ -8,7 +8,7 @@ const Modal = ({
   visible,
   clickOutside = true,
   setVisible,
-}: TModal) => {
+}: ModalType) => {
   return (
     <Transition show={visible} as={Fragment}>
       <Dialog

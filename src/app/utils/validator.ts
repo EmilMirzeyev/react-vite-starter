@@ -1,19 +1,17 @@
-import { ZodType } from "zod";
+import type { ZodType } from "zod";
 
-type TValidator<T> = {
+type ValidatorType<T> = {
+  endpoint: string;
   schema: ZodType<any>;
   response: T;
 };
 
-export const validator = <T>({
-    schema,
-    response,
-  }: TValidator<T>) => {
-    const validatedDTO = schema.safeParse(response);
-    if (!validatedDTO.success) {
-      console.error(validatedDTO.error);
-      throw new Error("Schema not correct");
-    } else {
-      return validatedDTO.data;
-    }
-  };
+export const validator = <T>({ endpoint, schema, response }: ValidatorType<T>) => {
+  const validatedDTO = schema.safeParse(response);
+  if (!validatedDTO.success) {
+    console.error(endpoint, validatedDTO.error);
+    throw new Error("Schema not correct");
+  } else {
+    return validatedDTO.data;
+  }
+};

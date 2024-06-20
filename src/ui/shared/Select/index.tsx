@@ -3,10 +3,11 @@ import { Fragment, ReactElement } from "react";
 import { twMerge } from "tailwind-merge";
 import UpChevronSVG from "@svg/up_chevron.svg?react";
 import XSVG from "@svg/x.svg?react";
-import { SelectVM } from "./SelectVM";
+import { SelectVM } from "./select.vm";
 import type { SelectDataType, SelectType } from "./select.type";
 import { SelectOptionVariantEnum } from "./select.enum";
 import SelectOptionFactory from "./SelectOptionFactory";
+import { handleError } from "@/app/helpers/handleError";
 
 const Select = <T extends SelectDataType>({
   data,
@@ -34,8 +35,10 @@ const Select = <T extends SelectDataType>({
             <div className="relative">
               <Listbox.Button
                 className={[
-                  "relative flex items-center justify-between w-full cursor-default h-14 rounded-lg bg-white py-2 p-3 border text-left sm:text-sm",
-                  hasMethods && methods.formState.errors[name] && methods.formState.submitCount > 0
+                  "relative flex items-center justify-between w-full cursor-default h-14 rounded-lg bg-white focus-within:border-gray-400 py-2 p-3 border text-left sm:text-sm",
+                  hasMethods &&
+                  handleError(name, methods) &&
+                  methods.formState.submitCount > 0
                     ? "border-red"
                     : "border-gray-400",
                 ].join(" ")}
@@ -55,6 +58,7 @@ const Select = <T extends SelectDataType>({
                   className={[
                     "block truncate duration-100",
                     innerValue.id !== null && !!label ? "translate-y-1.5" : "",
+                    innerValue.id === null && !label ? "text-gray" : "",
                   ].join(" ")}
                 >
                   {innerValue.id !== null ? innerValue.name : label || "Seçin"}
@@ -96,11 +100,13 @@ const Select = <T extends SelectDataType>({
           );
         }}
       </Listbox>
-      {hasMethods && methods.formState.errors[name] && methods.formState.submitCount > 0 && (
+      {hasMethods &&
+      methods.formState.submitCount > 0 &&
+      Object.values(methods.formState.errors).length ? (
         <span role="alert" className="text-red text-14px400">
-          {methods.formState.errors[name]!.message as string}
+          {handleError(name, methods)}
         </span>
-      )}
+      ) : null}
     </div>
   );
 };

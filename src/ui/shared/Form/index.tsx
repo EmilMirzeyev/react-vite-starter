@@ -1,7 +1,7 @@
 import { FormProvider } from "react-hook-form";
-import { TForm } from "./TForm";
+import type { FormType } from "./form.type";
 
-const Form = ({ children, methods, ...props }: TForm) => {
+const Form = ({ children, methods, ...props }: FormType) => {
   return (
     <FormProvider {...methods}>
       <form {...props}>{children}</form>

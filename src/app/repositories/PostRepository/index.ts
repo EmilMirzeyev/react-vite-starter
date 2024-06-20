@@ -4,15 +4,16 @@ import {
   addPostService,
   deletePostService,
 } from "@/app/services/posts.service";
-import { TPostRespository } from "./TPostRepository";
 import { postMigration } from "@/data/migration/post.migration";
+import type { PostRespositoryType } from "./post.repository.type";
+import type { PostDSO } from "@/data/dso/post.dso";
 
-const PostRepository: TPostRespository = {
+const PostRepository: PostRespositoryType = {
   async deletePost(id) {
     return await deletePostService(id);
   },
   async addPost(post) {
-    return await addPostService(post);
+    return await addPostService(post as PostDSO);
   },
   async getPosts(query) {
     const posts = await getPostsService(query);
