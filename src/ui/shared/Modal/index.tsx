@@ -1,10 +1,19 @@
-import { Dialog, Transition } from "@headlessui/react";
+import {
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+  Transition,
+  TransitionChild,
+} from "@headlessui/react";
 import { Fragment } from "react";
-import type { ModalType } from "./modal.type";
+import { ModalType } from "./modal.type";
+import XSVG from "@svg/x.svg?react";
 
 const Modal = ({
   children,
+  title = "",
   dialogClassName,
+  closeButton = true,
   visible,
   clickOutside = true,
   setVisible,
@@ -16,7 +25,7 @@ const Modal = ({
         className="relative z-50"
         onClose={() => clickOutside && setVisible(false)}
       >
-        <Transition.Child
+        <TransitionChild
           as={Fragment}
           enter="ease-out duration-300"
           enterFrom="opacity-0"
@@ -26,10 +35,10 @@ const Modal = ({
           leaveTo="opacity-0"
         >
           <div className="fixed inset-0 bg-black bg-opacity-75" />
-        </Transition.Child>
+        </TransitionChild>
         <div className="fixed inset-0 overflow-y-auto">
           <div className="w-full flex min-h-full items-center justify-center p-4 text-center">
-            <Transition.Child
+            <TransitionChild
               as={Fragment}
               enter="ease-out duration-300"
               enterFrom="opacity-0 scale-95"
@@ -38,15 +47,26 @@ const Modal = ({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel
+              <DialogPanel
                 className={[
-                  "transform rounded bg-white dark:bg-lightBlack text-left align-middle shadow-xl transition-all",
+                  "min-w-[260px] transform rounded bg-white text-left align-middle shadow-xl transition-all p-4",
                   dialogClassName,
                 ].join(" ")}
               >
+                {(title || closeButton) && (
+                  <div className="flex items-center justify-between gap-x-4 mb-4">
+                    {title && <DialogTitle>{title}</DialogTitle>}
+                    {closeButton && (
+                      <XSVG
+                        className="ml-auto cursor-pointer"
+                        onClick={() => setVisible(false)}
+                      />
+                    )}
+                  </div>
+                )}
                 {children}
-              </Dialog.Panel>
-            </Transition.Child>
+              </DialogPanel>
+            </TransitionChild>
           </div>
         </div>
       </Dialog>

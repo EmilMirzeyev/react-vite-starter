@@ -6,24 +6,18 @@ import SelectOptionWithIcon from "./SelectOptionWithIcon";
 
 type SelectOptionFactoryType = <T extends SelectDataType>({
   data,
-  selected,
   variant,
 }: {
   data: T;
-  selected: boolean;
   variant: SelectOptionVariantEnum;
 }) => ReactElement;
 
-const SelectOptionFactory: SelectOptionFactoryType = ({
-  data,
-  selected,
-  variant,
-}) => {
+const SelectOptionFactory: SelectOptionFactoryType = ({ data, variant }) => {
   switch (variant) {
     case SelectOptionVariantEnum.BASE:
-      return <SelectOptionBase data={data} selected={selected} />;
+      return <SelectOptionBase data={data} />;
     case SelectOptionVariantEnum.WITH_ICON:
-      return <SelectOptionWithIcon data={data} selected={selected} />;
+      return <SelectOptionWithIcon data={data} />;
     default:
       throw new Error("Invalid option variant");
   }

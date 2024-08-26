@@ -1,9 +1,9 @@
-import { EButtonVariants } from "@/data/enum/button.enum";
-import Button from "@/ui/shared/Button";
 import Select from "@/ui/shared/Select";
 import Input from "@/ui/shared/Input";
 import { PostFormVM } from "./post_form.vm";
 import Form from "@/ui/shared/Form";
+import Button from "@/ui/shared/Button";
+import { ButtonVariantsEnum } from "@/data/enum/button_variants.enum";
 
 const PostForm = () => {
   const { t, methods, submitHandler } = PostFormVM();
@@ -26,7 +26,7 @@ const PostForm = () => {
             { id: 1, name: "Bəli" },
           ]}
         />
-        <Button variant={EButtonVariants.OUTLINED}>Send</Button>
+        <Button variant={ButtonVariantsEnum.OUTLINED}>Send</Button>
       </Form>
     </div>
   );

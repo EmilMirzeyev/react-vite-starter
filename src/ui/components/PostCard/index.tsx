@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import UpChevronSVG from "@svg/up_chevron.svg?react";
+import ChevronUpSVG from "@svg/chevron_up.svg?react";
 import XSVG from "@svg/x.svg?react";
 import EditSVG from "@svg/edit.svg?react";
 import type { PostCardType } from "./post_card.type";
@@ -25,11 +25,11 @@ const PostCard = ({
             onClick={updateHandler}
           />
           <Link to={id.toString()} aria-label={title} className="w-min">
-            <UpChevronSVG className="w-6 h-6 text-red rotate-90" />
+            <ChevronUpSVG className="size-6 text-red rotate-90" />
           </Link>
         </div>
         <XSVG
-          className="absolute top-0 right-0 bg-red text-white cursor-pointer hover:brightness-125"
+          className="absolute top-0 right-0 bg-red-500 text-white cursor-pointer hover:brightness-125"
           onClick={deleteHandler}
         />
       </div>

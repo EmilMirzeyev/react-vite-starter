@@ -6,10 +6,14 @@ type ValidatorType<T> = {
   response: T;
 };
 
-export const validator = <T>({ endpoint, schema, response }: ValidatorType<T>) => {
+export const validator = <T>({
+  endpoint,
+  schema,
+  response,
+}: ValidatorType<T>) => {
   const validatedDTO = schema.safeParse(response);
   if (!validatedDTO.success) {
-    console.error(endpoint, validatedDTO.error);
+    console.error(endpoint, validatedDTO.error.issues);
     throw new Error("Schema not correct");
   } else {
     return validatedDTO.data;

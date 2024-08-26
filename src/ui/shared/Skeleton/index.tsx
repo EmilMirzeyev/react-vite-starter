@@ -1,3 +1,4 @@
+import { cn } from "@/app/utils/cn";
 import type { SkeletonType } from "./skeleton.type";
 
 const Skeleton = ({
@@ -5,7 +6,10 @@ const Skeleton = ({
 }: SkeletonType) => {
   return (
     <div
-      className={`animate-pulse bg-gradient-to-r from-gray/70 to-gray/50 rounded ${className}`}
+      className={cn(
+        "animate-pulse bg-gradient-to-r from-gray/70 to-gray/50 rounded",
+        className
+      )}
     ></div>
   );
 };

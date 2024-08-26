@@ -26,12 +26,12 @@ const Input = ({
     <div className="w-full">
       <div
         className={[
-          `relative flex items-center gap-x-4 px-4 border h-14 border-solid rounded-lg ${
+          `relative flex items-center gap-x-4 px-4 border h-14 focus-within:border-gray-500 border-solid rounded-lg ${
             props?.disabled ? "bg-gray-100" : "bg-white"
           }`,
           hasMethods && handleError(name, methods)
-            ? "border-red"
-            : "border-softBlack",
+            ? "!border-red-500"
+            : "border-gray-200",
         ].join(" ")}
       >
         {leading}
@@ -62,8 +62,8 @@ const Input = ({
         </div>
         {trailing}
       </div>
-      {hasMethods && Object.values(methods.formState.errors).length ? (
-        <span role="alert" className="text-red text-14px400">
+      {hasMethods && handleError(name, methods) ? (
+        <span role="alert" className="text-red-500 text-14px400">
           {handleError(name, methods)}
         </span>
       ) : null}

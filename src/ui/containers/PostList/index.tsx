@@ -1,9 +1,9 @@
-import { ERequestState } from "@/data/enum/request_state.enum";
 import PostCard from "@/ui/components/PostCard";
+import PostCardSkeleton from "@/ui/components/PostCard/PostCardSkeleton";
+import { PostListVM } from "./post_list.vm";
+import { RequestStateEnum } from "@/data/enum/request_state.enum";
 import Modal from "@/ui/shared/Modal";
 import Button from "@/ui/shared/Button";
-import PostCardSkeleton from "@/ui/components/PostCard/PostCardSkeleton";
-import { PostListVM } from "./PostListVM";
 
 const PostList = () => {
   const {
@@ -20,10 +20,10 @@ const PostList = () => {
   return (
     <>
       <div className="grid grid-cols-3 gap-4">
-        {requestState === ERequestState.LOADING &&
+        {requestState === RequestStateEnum.LOADING &&
           [...Array(6)].map((_, i) => <PostCardSkeleton key={i} />)}
-        {requestState === ERequestState.EMPTY && <div>No Data</div>}
-        {requestState === ERequestState.SUCCESS &&
+        {requestState === RequestStateEnum.EMPTY && <div>No Data</div>}
+        {requestState === RequestStateEnum.SUCCESS &&
           data?.map((post) => (
             <PostCard
               key={post.id}
@@ -39,9 +39,14 @@ const PostList = () => {
           ))}
       </div>
       <Modal visible={modalVisible} setVisible={setModalVisible}>
-        <div className="p-4">
+        <div className="space-y-4">
           <p>Silmek istediyinizden eminsiz ?</p>
-          <Button onClick={() => deleteHandler(activeID!)}>Sil</Button>
+          <Button
+            className="bg-red-500 w-full"
+            onClick={() => deleteHandler(activeID!)}
+          >
+            Sil
+          </Button>
         </div>
       </Modal>
     </>

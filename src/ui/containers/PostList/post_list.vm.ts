@@ -1,10 +1,10 @@
 import { useMemo, useState } from "react";
 import { useDeletePost, usePosts } from "@/app/api/postApi";
-import { ERequestState } from "@/data/enum/request_state.enum";
-import { type PostModel } from "@/data/model/post.model";
+import type { PostModel } from "@/data/model/post.model";
 import { setPostForm } from "@/app/store/postSlice";
 import { useAppDispatch } from "@/app/hooks/useRedux";
 import { useUpdateEffect } from "@/app/hooks/useUpdateEffect";
+import { RequestStateEnum } from "@/data/enum/request_state.enum";
 
 export const PostListVM = () => {
   const { data, isLoading, isError, error } = usePosts("?_limit=20");
@@ -32,9 +32,9 @@ export const PostListVM = () => {
   };
 
   const requestState = useMemo(() => {
-    if (isLoading) return ERequestState.LOADING;
-    if (data?.length) return ERequestState.SUCCESS;
-    if (data?.length === 0) return ERequestState.EMPTY;
+    if (isLoading) return RequestStateEnum.LOADING;
+    if (data?.length) return RequestStateEnum.SUCCESS;
+    if (data?.length === 0) return RequestStateEnum.EMPTY;
   }, [isLoading, data]);
 
   return {

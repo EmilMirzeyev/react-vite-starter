@@ -18,7 +18,13 @@ export const InputVM = ({
   const [innerValue, setInnerValue] = useState<string | null>(null);
   const [dirty, setDirty] = useState(false);
   const debouncedValue = useDebounce<string>(innerValue!, 500);
-  const reg = methods ? { ...methods.register?.(name) } : undefined;
+  const reg = methods
+    ? {
+        ...methods.register?.(name, {
+          onChange: (e) => changeHandler(e),
+        }),
+      }
+    : undefined;
   const hasMethods = methods && methods.formState;
 
   useUpdateEffect(() => {

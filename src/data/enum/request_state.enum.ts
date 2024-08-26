@@ -1,5 +1,5 @@
-export const enum ERequestState {
-    LOADING,
-    SUCCESS,
-    EMPTY
+export const enum RequestStateEnum {
+  SUCCESS,
+  LOADING,
+  EMPTY,
 }

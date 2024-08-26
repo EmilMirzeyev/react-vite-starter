@@ -1,14 +1,14 @@
-import { EButtonVariants } from "@/data/enum/button.enum";
+import { ButtonVariantsEnum } from "@/data/enum/button_variants.enum";
 import React, { useCallback } from "react";
 
 export const ButtonVM = () => {
-  const variants: Record<EButtonVariants, () => string> = {
-    [EButtonVariants.FILLED]() {
-      return "bg-red text-white";
-    },
-    [EButtonVariants.OUTLINED]() {
-      return "bg-blue text-white";
-    },
+  const variants: Record<ButtonVariantsEnum, string> = {
+    [ButtonVariantsEnum.FILLED]:
+      "bg-blue-600 text-white border border-transparent hover:brightness-125 disabled:bg-gray-500 disabled:cursor-wait disabled:hover:brightness-100",
+    [ButtonVariantsEnum.OUTLINED]:
+      "text-gray-800 border border-gray-300 [&_.spinner]:border-gray-800",
+    [ButtonVariantsEnum.SECONDARY_OUTLINED]:
+      "text-blue-600 bg-blue-50 border border-blue-600 [&_.spinner]:border-blue-600",
   };
 
   const rippleEffect = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {

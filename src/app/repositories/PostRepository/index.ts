@@ -4,7 +4,7 @@ import {
   addPostService,
   deletePostService,
 } from "@/app/services/posts.service";
-import { postMigration } from "@/data/migration/post.migration";
+import { postMigration } from "@/app/migration/post.migration";
 import type { PostRespositoryType } from "./post.repository.type";
 import type { PostDSO } from "@/data/dso/post.dso";
 

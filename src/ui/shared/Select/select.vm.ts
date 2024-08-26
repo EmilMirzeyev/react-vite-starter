@@ -1,12 +1,12 @@
 import { MouseEvent, useState } from "react";
 import type { SelectType, SelectDataType } from "./select.type";
-import { useUpdateEffect } from "@/app/hooks/useUpdateEffect";
 import { FieldValues, UseFormReturn, useFormContext } from "react-hook-form";
+import { useUpdateEffect } from "@/app/hooks/useUpdateEffect";
 
 export const SelectVM = <T extends SelectDataType>({
   data,
-  value,
   name,
+  value,
   onChange,
 }: Pick<SelectType<T>, "data" | "value" | "onChange" | "name">) => {
   const methods: UseFormReturn<FieldValues, any, undefined> = useFormContext();
@@ -50,7 +50,7 @@ export const SelectVM = <T extends SelectDataType>({
     e.stopPropagation();
     if (methods) {
       methods.setValue(name, null);
-      methods.trigger(name);
+      methods.formState.submitCount > 0 && methods.trigger(name);
     }
     setInnerValue({ id: null, name: "" } as T);
     onChange?.({ id: null, name: "" } as T);
