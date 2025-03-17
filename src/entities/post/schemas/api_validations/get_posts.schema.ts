@@ -7,4 +7,4 @@ export const postSchema = z.object({
   title: z.string(),
 });
 
-export const postsApiSchema = z.array(postSchema);
+export const getPostsSchema = z.array(postSchema);
