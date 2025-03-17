@@ -8,20 +8,11 @@ const AuthProtectedRoute = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (userError) {
-      navigate("/login");
-    }
-  }, [userError]);
+    if (userError) navigate("/login");
+  }, [navigate, userError]);
 
-  return isAuth ? (
-    userData ? (
-      <Outlet />
-    ) : (
-      <h1>Loading...</h1>
-    )
-  ) : (
-    <Navigate to="/login" replace />
-  );
+  if (!isAuth) return <Navigate to="/login" replace />;
+  return userData ? <Outlet /> : <h1>Loading...</h1>;
 };
 
 export default AuthProtectedRoute;

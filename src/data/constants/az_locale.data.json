@@ -1,0 +1,55 @@
+{
+    "sunday": "B",
+    "monday": "B.e",
+    "tuesday": "Ç.a",
+    "wednesday": "Ç",
+    "thursday": "C.a",
+    "friday": "C",
+    "saturday": "Ş",
+    "ok": "Təsdiq et",
+    "today": "Bugün",
+    "yesterday": "Dünən",
+    "lastWeek": "Keçən Həftə",
+    "thisWeek": "Bu Həftə",
+    "lastMonth": "Keçən Ay",
+    "thisMonth": "Bu Ay",
+    "months": [
+      "Yanvar",
+      "Fevral",
+      "Mart",
+      "Aprel",
+      "May",
+      "İyun",
+      "İyul",
+      "Avqust",
+      "Sentyabr",
+      "Oktyabr",
+      "Noyabr",
+      "Dekabr"
+    ],
+    "shortMonths": [
+      "Yan",
+      "Fev",
+      "Mar",
+      "Apr",
+      "May",
+      "İyun",
+      "İyul",
+      "Avq",
+      "Sen",
+      "Okt",
+      "Noy",
+      "Dek"
+    ],
+    "weekdays": [
+      "Bazar",
+      "Bazar ertəsi",
+      "Çərşənbə axşamı",
+      "Çərşənbə",
+      "Cümə axşamı",
+      "Cümə",
+      "Şənbə"
+    ],
+    "shortWeekdays": ["B", "B.e", "Ç.a", "Ç", "C.a", "C", "Ş"]
+  }
+  

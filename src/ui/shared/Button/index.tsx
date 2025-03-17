@@ -19,15 +19,15 @@ const Button = ({
       disabled={isLoading || disabled}
       onMouseDown={rippleEffect}
       className={cn(
-        "relative flex items-center justify-center h-14 z-10 rounded px-6 overflow-hidden [&>span]:absolute [&>span]:z-50 [&>span]:animate-ripple [&>span]:inline-block [&>span]:bg-white/50 [&>span]:-translate-y-1/2 [&>span]:-translate-x-1/2 [&>span]:pointer-events-none [&>span]:rounded-full [&>span]:scale-0",
+        "relative flex items-center justify-center h-14 z-10 rounded px-6 overflow-hidden disabled:cursor-not-allowed [&>.ripple]:absolute [&>.ripple]:z-50 [&>.ripple]:animate-ripple [&>.ripple]:inline-block [&>.ripple]:-translate-y-1/2 [&>.ripple]:-translate-x-1/2 [&>.ripple]:pointer-events-none [&>.ripple]:rounded-full [&>.ripple]:scale-0",
         variants[variant],
         className
       )}
     >
       {isLoading ? (
         <div className="relative h-full aspect-square p-1">
-          <div className="w-full h-full border-light opacity-20 border-2 rounded-full"></div>
-          <div className="border-light opacity-70 border-t-2 animate-spin rounded-full absolute inset-1"></div>
+          <div className="spinner w-full h-full opacity-20 border-2 rounded-full"></div>
+          <div className="spinner opacity-70 border-t-2 animate-spin rounded-full absolute inset-1"></div>
         </div>
       ) : (
         children

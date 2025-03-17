@@ -1,5 +1,5 @@
 import { ListboxOption } from "@headlessui/react";
-import type { SelectDataType } from "./select.type";
+import type { SelectDataType } from "../select.type.ts";
 
 const SelectOptionBase = <T extends SelectDataType>({ data }: { data: T }) => {
   return (

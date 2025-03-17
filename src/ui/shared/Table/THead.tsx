@@ -3,11 +3,12 @@ import { twMerge } from "tailwind-merge";
 import type { TableHeaderType } from "./table.type";
 
 export const THead = <T,>({ data }: { data: TableHeaderType<T>[] }) => {
+  const concreteWidth = data.filter((d) => !d.width);
   return (
     <thead>
       <TR className="h-[60px]  rounded">
         {data.map((th) => {
-          const width = th.width || `${100 / data.length}%`;
+          const width = th.width || `${100 / concreteWidth.length}%`;
           return (
             <th
               key={th.id}

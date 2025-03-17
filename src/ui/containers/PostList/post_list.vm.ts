@@ -1,15 +1,16 @@
 import { useMemo, useState } from "react";
-import { useDeletePost, usePosts } from "@/app/api/postApi";
-import type { PostModel } from "@/data/model/post.model";
-import { setPostForm } from "@/app/store/postSlice";
+import type { PostModel } from "@/entities/post/models/post.model.ts";
 import { useAppDispatch } from "@/app/hooks/useRedux";
 import { useUpdateEffect } from "@/app/hooks/useUpdateEffect";
 import { RequestStateEnum } from "@/data/enum/request_state.enum";
+import { useGetPostsApi } from "@/entities/post/api/useGetPosts.api.ts";
+import { useDeletePostApi } from "@/entities/post/api/useDeletePost.api.ts";
+import { setPostForm } from "@/entities/post/slice";
 
 export const PostListVM = () => {
-  const { data, isLoading, isError, error } = usePosts("?_limit=20");
+  const { data, isLoading, isError, error } = useGetPostsApi("?_limit=20");
   const dispatch = useAppDispatch();
-  const deletePost = useDeletePost();
+  const deletePost = useDeletePostApi();
   const [modalVisible, setModalVisible] = useState(false);
   const [activeID, setActiveID] = useState<number>();
 
@@ -46,5 +47,6 @@ export const PostListVM = () => {
     deleteHandler,
     updateHandler,
     requestState,
+    deleteLoading: deletePost.isPending,
   };
 };

@@ -1,5 +1,5 @@
 import { ListboxOption } from "@headlessui/react";
-import type { SelectDataType } from "./select.type";
+import type { SelectDataType } from "../select.type.ts";
 import ChevronUpSVG from "@svg/chevron_up.svg?react";
 
 const SelectOptionWithIcon = <T extends SelectDataType>({

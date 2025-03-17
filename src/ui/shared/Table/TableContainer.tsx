@@ -1,12 +1,11 @@
 import { TD, THead, TR } from ".";
 import type { TableType } from "./table.type";
-// import Pagination from "../Pagination";
-import { RequestStateEnum } from "../../../data/enum/request_state.enum";
+import { RequestStateEnum } from "../Select/request_state.enum";
 import { cn } from "@/app/utils/cn";
 import { getNestedValue } from "@/app/helpers/getNestedValue";
 import Pagination from "../Pagination";
 
-export const TableContainer = <T extends { id: number }>({
+export const TableContainer = <T extends { id: number | string }>({
   headData,
   bodyData,
   state = RequestStateEnum.SUCCESS,
@@ -14,6 +13,7 @@ export const TableContainer = <T extends { id: number }>({
   title,
   pagination,
 }: TableType<T>) => {
+
   const render = () => {
     switch (state) {
       case RequestStateEnum.LOADING:
@@ -69,16 +69,18 @@ export const TableContainer = <T extends { id: number }>({
             )}
           >
             {title && <div className="px-4 pt-5 pb-2 mb-2">{title}</div>}
-            <table className="min-w-full text-left text-sm font-light table-auto">
-              <THead data={headData} />
-              <tbody>{render()}</tbody>
-            </table>
-            {pagination && (
-              <Pagination
-                total={pagination.total}
-                perPage={pagination.perPage}
-              />
-            )}
+            <div className="flex flex-col gap-y-10">
+              <table className="table-fixed w-full text-left text-sm font-light">
+                <THead data={headData} />
+                <tbody>{render()}</tbody>
+              </table>
+              {pagination && state === RequestStateEnum.SUCCESS && (
+                <Pagination
+                  total={pagination.total!}
+                  perPage={pagination.perPage}
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>

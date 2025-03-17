@@ -3,7 +3,7 @@ import { getCookie } from "@/app/helpers/cookies";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
-export const languageResources: Record<string, {translation: typeof az}> = {
+export const languageResources: Record<string, { translation: typeof az }> = {
   az: {
     translation: az,
   },
@@ -17,7 +17,7 @@ export const languageResources: Record<string, {translation: typeof az}> = {
 
 i18n.use(initReactI18next).init({
   resources: languageResources,
-  lng: getCookie("lcl") || "az",
+  lng: getCookie("language") || "az",
   interpolation: {
     escapeValue: false,
   },

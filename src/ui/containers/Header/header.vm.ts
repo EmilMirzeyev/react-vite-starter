@@ -6,9 +6,9 @@ export const HeaderVM = () => {
     const { i18n } = useTranslation();
     const languages = Object.keys(languageResources)
 
-  const handleLocale = (locale: string) => {
+  const handleLocale = async (locale: string) => {
     setCookie("lcl", locale, 30);
-    i18n.changeLanguage(locale);
+    await i18n.changeLanguage(locale);
   };
 
   return { languages, handleLocale}

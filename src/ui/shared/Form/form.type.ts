@@ -1,5 +1,5 @@
-import type { DetailedHTMLProps, FormHTMLAttributes } from "react";
-import type { FieldValues, UseFormReturn } from "react-hook-form";
+import { DetailedHTMLProps, FormHTMLAttributes } from "react";
+import { FieldValues, UseFormReturn } from "react-hook-form";
 
 export type FormType = DetailedHTMLProps<
   FormHTMLAttributes<HTMLFormElement>,

@@ -6,8 +6,8 @@ const PostCardSkeleton = () => {
             <Skeleton className="w-2/3 h-8" />
             <Skeleton className="h-20" />
             <div className="flex ml-auto gap-4">
-                <Skeleton className="w-6 h-6" />
-                <Skeleton className="w-6 h-6" />
+                <Skeleton className="size-6" />
+                <Skeleton className="size-6" />
             </div>
         </div>
     )

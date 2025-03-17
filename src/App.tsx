@@ -15,7 +15,7 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="h-full w-full">
+      <div className="size-full">
         <AppRoutes />
       </div>
       <Tooltip id="my-tooltip" />

@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
-import colors from "./src/data/mocks/colors.data";
-import fontSize from "./src/data/mocks/font_size.data";
+import colors from "./src/data/constants/colors.data";
+import fontSize from "./src/data/constants/font_size.data";
+
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {

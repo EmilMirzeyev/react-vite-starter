@@ -5,12 +5,12 @@ import type {
   PropsWithChildren,
   ReactNode,
 } from "react";
-import { ClassValue } from "clsx";
+import { RequestStateEnum } from "../Select/request_state.enum";
 import type { NestedKeysType } from "@/data/types/nested_keys.type";
-import { RequestStateEnum } from "@/data/enum/request_state.enum";
+import { ClassValue } from "clsx";
 
 export type TableHeaderBaseType = {
-  id: number;
+  id: number | string;
   name?: string | ReactNode;
   width?: string;
   className?: string;
@@ -22,7 +22,7 @@ export type TableHeaderType<T> = TableHeaderBaseType &
     | { key?: never; render: (row: T, index: number) => ReactNode }
   );
 
-export type TableType<T extends { id: number }> = {
+export type TableType<T extends { id: number | string }> = {
   headData: TableHeaderType<T>[];
   bodyData: T[];
   state?: RequestStateEnum;
@@ -30,10 +30,7 @@ export type TableType<T extends { id: number }> = {
   className?: string;
   trClassname?: string | ((row: T) => ClassValue);
   total?: number;
-  pagination?: {
-    total: number;
-    perPage?: number;
-  };
+  pagination?: { total?: number; perPage?: number };
 };
 
 export type TableDataCellNTableRowType = PropsWithChildren &

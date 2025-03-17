@@ -1,23 +1,15 @@
-import { useDebounce } from "@/core/hooks/useDebounce";
-import { useUpdateEffect } from "@/core/hooks/useUpdateEffect";
-import { ChangeEvent, KeyboardEvent, useState } from "react";
+import { useDebounce } from "@/app/hooks/useDebounce";
+import { useUpdateEffect } from "@/app/hooks/useUpdateEffect";
+import { ChangeEvent, useState } from "react";
 import { FieldValues, UseFormReturn, useFormContext } from "react-hook-form";
-
-type Props = {
-  name: string;
-  type?: string;
-  isDebounce: boolean;
-  onDebounce?: (value: string) => void;
-  onChange?: (value: string) => void;
-};
+import { TextareaType } from "./textarea.type";
 
 export const TextareaVM = ({
   name,
-  type,
   isDebounce,
   onDebounce,
   onChange,
-}: Props) => {
+}: TextareaType) => {
   const methods: UseFormReturn<FieldValues, any, undefined> = useFormContext();
   const [innerValue, setInnerValue] = useState<string | null>(null);
   const [dirty, setDirty] = useState(false);
@@ -36,6 +28,7 @@ export const TextareaVM = ({
   };
 
   return {
+    innerValue,
     reg,
     hasMethods,
     methods,

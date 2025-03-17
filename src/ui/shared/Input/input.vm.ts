@@ -2,7 +2,14 @@ import { useDebounce } from "@/app/hooks/useDebounce";
 import { useUpdateEffect } from "@/app/hooks/useUpdateEffect";
 import { ChangeEvent, KeyboardEvent, useState } from "react";
 import { FieldValues, UseFormReturn, useFormContext } from "react-hook-form";
-import type { InputType } from "./input.type";
+
+type Props = {
+  name: string;
+  type?: string;
+  isDebounce: boolean;
+  onDebounce?: (value: string) => void;
+  onChange?: (value: string) => void;
+};
 
 export const InputVM = ({
   name,
@@ -10,21 +17,12 @@ export const InputVM = ({
   isDebounce,
   onDebounce,
   onChange,
-}: Pick<
-  InputType,
-  "name" | "type" | "isDebounce" | "onDebounce" | "onChange"
->) => {
+}: Props) => {
   const methods: UseFormReturn<FieldValues, any, undefined> = useFormContext();
   const [innerValue, setInnerValue] = useState<string | null>(null);
   const [dirty, setDirty] = useState(false);
   const debouncedValue = useDebounce<string>(innerValue!, 500);
-  const reg = methods
-    ? {
-        ...methods.register?.(name, {
-          onChange: (e) => changeHandler(e),
-        }),
-      }
-    : undefined;
+  const reg = methods ? { ...methods.register?.(name) } : undefined;
   const hasMethods = methods && methods.formState;
 
   useUpdateEffect(() => {

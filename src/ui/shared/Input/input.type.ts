@@ -13,7 +13,8 @@ export type InputType = Omit<
   name: string;
   type?: string;
   isDebounce?: boolean;
-  inputClassName?: string;
+  className?: string;
+  inputWrapperClassname?: string;
   onChange?: (value: string) => void;
   onDebounce?: (value: string) => void;
 };

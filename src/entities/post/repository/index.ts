@@ -1,29 +1,26 @@
-import {
-  getPostService,
-  getPostsService,
-  addPostService,
-  deletePostService,
-} from "@/app/services/posts.service";
-import { postMigration } from "@/app/migration/post.migration";
-import type { PostRespositoryType } from "./post.repository.type";
-import type { PostDSO } from "@/data/dso/post.dso";
 
-const PostRepository: PostRespositoryType = {
+import type {PostRepositoryType} from "./post.repository.type.ts";
+import {getPostByIdService} from "@/entities/post/services/get_post_by_id.service.ts";
+import {deletePostService} from "@/entities/post/services/delete_post.service.ts";
+import {addPostService} from "@/entities/post/services/add_post.service.ts";
+import {getPostsService} from "@/entities/post/services/get_posts.service.ts";
+import type {PostReqDTO} from "@/entities/post/req_dto/post.req_dto.ts";
+import { postMapper } from "@/entities/post/mapper";
+
+const PostRepository: PostRepositoryType = {
   async deletePost(id) {
     return await deletePostService(id);
   },
   async addPost(post) {
-    return await addPostService(post as PostDSO);
+    return await addPostService(post as PostReqDTO);
   },
   async getPosts(query) {
     const posts = await getPostsService(query);
-    const migratedPosts = posts.map(postMigration.dtoToModel);
-    return migratedPosts;
+    return posts.map(postMapper.resDtoToModel);
   },
-  async getPost(id) {
-    const post = await getPostService(id);
-    const migratedPost = postMigration.dtoToModel(post);
-    return migratedPost;
+  async getPostById(id) {
+    const post = await getPostByIdService(id);
+    return postMapper.resDtoToModel(post);
   },
 };
 

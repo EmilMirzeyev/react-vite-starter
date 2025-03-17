@@ -1,6 +1,8 @@
-import { handleError } from "@/app/helpers/handleError";
-import type { InputType } from "./input.type";
+import { twMerge } from "tailwind-merge";
+import { InputType } from "./input.type";
 import { InputVM } from "./input.vm";
+import { handleError } from "@/app/helpers/handleErrors";
+import { cn } from "@/app/utils/cn";
 
 const Input = ({
   label,
@@ -10,6 +12,8 @@ const Input = ({
   type,
   isDebounce = false,
   placeholder,
+  className,
+  inputWrapperClassname,
   onChange,
   onDebounce,
   ...props
@@ -23,16 +27,16 @@ const Input = ({
   });
 
   return (
-    <div className="w-full">
+    <div className={twMerge("w-full", className)}>
       <div
-        className={[
-          `relative flex items-center gap-x-4 px-4 border h-14 focus-within:border-gray-500 border-solid rounded-lg ${
-            props?.disabled ? "bg-gray-100" : "bg-white"
-          }`,
+        className={cn(
+          "relative flex items-center gap-x-4 px-4 border h-14 border-solid rounded-lg bg-white",
+          inputWrapperClassname,
+          props?.disabled ? "bg-gray-100" : "bg-white",
           hasMethods && handleError(name, methods)
-            ? "!border-red-500"
-            : "border-gray-200",
-        ].join(" ")}
+            ? "border-red-500"
+            : "border-gray-300 focus-within:border-gray-400"
+        )}
       >
         {leading}
         <div className="relative h-full flex-grow">
@@ -41,10 +45,10 @@ const Input = ({
             id={name}
             type={type}
             placeholder={label ? " " : placeholder}
-            className={[
-              "w-full h-full peer text-15px400",
-              label ? "pt-3" : "",
-            ].join(" ")}
+            className={cn(
+              "w-full h-full peer text-15px400 bg-transparent",
+              label ? "pt-3" : ""
+            )}
             onKeyDown={keyDownHandler}
             onChange={changeHandler}
             {...props}

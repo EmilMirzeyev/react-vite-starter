@@ -1,5 +1,5 @@
 import { FormProvider } from "react-hook-form";
-import type { FormType } from "./form.type";
+import { FormType } from "./form.type";
 
 const Form = ({ children, methods, ...props }: FormType) => {
   return (

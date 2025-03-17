@@ -22,7 +22,7 @@ const Modal = ({
     <Transition show={visible} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-50"
+        className="relative z-90"
         onClose={() => clickOutside && setVisible(false)}
       >
         <TransitionChild

@@ -7,7 +7,7 @@ const Skeleton = ({
   return (
     <div
       className={cn(
-        "animate-pulse bg-gradient-to-r from-gray/70 to-gray/50 rounded",
+        "animate-pulse bg-gradient-to-r from-gray-300 to-gray-400 rounded",
         className
       )}
     ></div>

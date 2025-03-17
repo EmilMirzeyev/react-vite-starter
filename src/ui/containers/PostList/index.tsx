@@ -15,6 +15,7 @@ const PostList = () => {
     deleteHandler,
     updateHandler,
     requestState,
+    deleteLoading,
   } = PostListVM();
 
   return (
@@ -44,6 +45,7 @@ const PostList = () => {
           <Button
             className="bg-red-500 w-full"
             onClick={() => deleteHandler(activeID!)}
+            isLoading={deleteLoading}
           >
             Sil
           </Button>

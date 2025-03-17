@@ -9,6 +9,7 @@ export type TextareaType = Omit<
   label?: string;
   placeholder?: string;
   name: string;
+  symbolCount?: number;
   isDebounce?: boolean;
   inputClassName?: string;
   onChange?: (value: string) => void;

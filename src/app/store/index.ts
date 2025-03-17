@@ -1,10 +1,9 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { setupListeners } from "@reduxjs/toolkit/dist/query";
-import postsReducer from "@/app/store/postSlice";
+import {configureStore} from "@reduxjs/toolkit";
+import {postSlice} from "@/entities/post/slice";
 
 export const store = configureStore({
   reducer: {
-    posts: postsReducer,
+    posts: postSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -14,4 +13,3 @@ export const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-setupListeners(store.dispatch);

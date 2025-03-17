@@ -1,20 +1,16 @@
 import { ReactNode, useState } from "react";
-import {
-  type FieldValues,
-  useFormContext,
-  type UseFormReturn,
-} from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import { RadioGroupType } from "./radio_group.type";
 
 export const RadioGroupVM = <
-  T extends { id: number; disabled?: boolean; render: ReactNode }
+  T extends { id: number; disabled?: boolean; render: ReactNode },
 >({
   data,
   name,
   value,
   onChange,
 }: Pick<RadioGroupType<T>, "data" | "name" | "value" | "onChange">) => {
-  const methods: UseFormReturn<FieldValues, any, undefined> = useFormContext();
+  const methods = useFormContext();
   const hasMethods = methods && methods.formState;
   const mainValue = hasMethods ? methods.getValues(name) : value;
 
@@ -23,20 +19,26 @@ export const RadioGroupVM = <
       return null;
     }
     if (typeof val === "number") {
-      return data.find((d) => d.id === val)?.id || null;
+      const valueId = data.find((d) => d.id === val)?.id;
+      return valueId ? { id: valueId } : null;
     }
     return val;
   };
   const [innerValue, setInnerValue] = useState(() => initialValue(mainValue));
 
-  const handleSelect = (val: T): void => {
+  const clickOnSelected = () => {
+    setInnerValue(null);
+    onChange?.(null);
+  };
+
+  const handleSelect = async (val: T): Promise<void> => {
     if (methods) {
       methods.setValue(name, val.id);
-      methods.trigger(name);
+      await methods.trigger(name);
     }
     setInnerValue(val);
     onChange?.(val);
   };
 
-  return { innerValue, handleSelect };
+  return { innerValue, handleSelect, clickOnSelected };
 };
